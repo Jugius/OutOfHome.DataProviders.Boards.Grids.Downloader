@@ -69,7 +69,7 @@ public sealed class HttpEngine<TRequest, TResponse, TParser> : HttpEngine
         return response;
 
     }
-    private async Task<HttpResponseMessage> ProcessRequestAsync(TRequest request, CancellationToken cancellationToken = default)
+    internal async Task<HttpResponseMessage> ProcessRequestAsync(TRequest request, CancellationToken cancellationToken = default)
     {
         if (request == null)
             throw new ArgumentNullException(nameof(request));
@@ -86,7 +86,7 @@ public sealed class HttpEngine<TRequest, TResponse, TParser> : HttpEngine
 
         return await HttpEngine.HttpClient.GetAsync(uri, cancellationToken).ConfigureAwait(false);
     }
-    private async Task<TResponse> ProcessResponseAsync(HttpResponseMessage httpResponse)
+    internal async Task<TResponse> ProcessResponseAsync(HttpResponseMessage httpResponse)
     {
         if (httpResponse == null)
             throw new ArgumentNullException(nameof(httpResponse));

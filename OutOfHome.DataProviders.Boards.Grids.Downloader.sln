@@ -5,6 +5,10 @@ VisualStudioVersion = 17.1.32421.90
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OutOfHome.DataProviders.Boards.Grids.Downloader", "OutOfHome.DataProviders.Boards.Grids.Downloader\OutOfHome.DataProviders.Boards.Grids.Downloader.csproj", "{8A0AA3A2-9995-4D5B-9EF5-7E48D344153F}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".tests", ".tests", "{5EF4CB06-424A-4EDE-89BF-D6614657B630}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Downloader.Test", ".tests\Downloader.Test\Downloader.Test.csproj", "{6905C6F3-26D5-4C57-9A3C-8F99E403CBDF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,9 +19,16 @@ Global
 		{8A0AA3A2-9995-4D5B-9EF5-7E48D344153F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8A0AA3A2-9995-4D5B-9EF5-7E48D344153F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8A0AA3A2-9995-4D5B-9EF5-7E48D344153F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6905C6F3-26D5-4C57-9A3C-8F99E403CBDF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6905C6F3-26D5-4C57-9A3C-8F99E403CBDF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6905C6F3-26D5-4C57-9A3C-8F99E403CBDF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6905C6F3-26D5-4C57-9A3C-8F99E403CBDF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{6905C6F3-26D5-4C57-9A3C-8F99E403CBDF} = {5EF4CB06-424A-4EDE-89BF-D6614657B630}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B7EF85D2-2E96-4EBD-B736-95D3C4F329DB}

@@ -7,7 +7,7 @@ namespace OutOfHome.DataProviders.Boards.Grids.Downloader.Entities
     {
         [JsonIgnore]
         public string RawResponseString { get; set; }
-        public int Downloaded { get; set; }
+        public DateTime Downloaded { get; set; }
         public Language Language { get; set; }
     }
 }
