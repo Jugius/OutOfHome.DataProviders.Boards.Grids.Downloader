@@ -4,6 +4,6 @@ namespace OutOfHome.DataProviders.Boards.Grids.Downloader
 {
     public class Outhub
     {
-        public static HttpEngine<GetGridRequest, GetGridResponse, GetGrigContentParser> GetGrid => HttpEngine<GetGridRequest, GetGridResponse, GetGrigContentParser>.instance;
+        public static HttpEngine<GetGridRequest, GetGridResponse, GetGridContentParser> GetGrid => HttpEngine<GetGridRequest, GetGridResponse, GetGridContentParser>.instance;
     }
 }
