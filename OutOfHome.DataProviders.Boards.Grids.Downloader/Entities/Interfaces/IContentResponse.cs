@@ -1,9 +1,8 @@
 ﻿namespace OutOfHome.DataProviders.Boards.Grids.Downloader.Entities.Interfaces;
 
-public interface IResponseContent : IResponse
+public interface IContentResponse<TResult> : IResponse
+    where TResult : new()
 {
-    /// <summary>
-    /// Raw string of the response.
-    /// </summary>
+    TResult Result { get; set; }
     string RawResponseString { get; set; }
 }

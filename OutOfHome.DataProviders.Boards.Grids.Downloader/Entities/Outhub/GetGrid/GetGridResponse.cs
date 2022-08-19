@@ -1,19 +1,9 @@
-﻿using System.Text.Json.Serialization;
+﻿using OutOfHome.DataProviders.Boards.Grids.Downloader.Entities.Outhub.Common;
 
-namespace OutOfHome.DataProviders.Boards.Grids.Downloader.Entities.Outhub.GetGrid
+namespace OutOfHome.DataProviders.Boards.Grids.Downloader.Entities.Outhub.GetGrid;
+
+public class GetGridResponse : BaseResponse, Interfaces.IContentResponse<ResponseContent>
 {
-    public class GetGridResponse : BaseGridResponse
-    {
-        [JsonPropertyName("items")]
-        public string[] Boards { get; set; }
-
-        [JsonPropertyName("status")]
-        public int ServerStatus { get; set; }
-
-        [JsonPropertyName("dateFromSec")]
-        public int DateFromSec { get; set; }
-
-        [JsonPropertyName("dateToSec")]
-        public int DateToSec { get; set; }
-    }
+    public ResponseContent Result { get; set; }
+    public string RawResponseString { get; set; }
 }
