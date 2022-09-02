@@ -2,7 +2,7 @@
 using System.Net.Http.Headers;
 using System.Security.Authentication;
 
-namespace OutOfHome.DataProviders.Boards.Grids.Downloader;
+namespace OutOfHome.DataProviders.Boards.Grids.Downloader.Services;
 internal class HttpClientFactory
 {
     public static HttpClient CreateDefaultHttpClient(HttpMessageHandler httpMessageHandler = null)

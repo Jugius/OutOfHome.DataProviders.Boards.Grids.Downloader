@@ -2,7 +2,7 @@
 
 namespace OutOfHome.DataProviders.Boards.Grids.Downloader.Entities.Interfaces;
 
-public interface IRequestPost : IRequest
+internal interface IRequestPost : IRequest
 {
     HttpContent GetContent();
 }

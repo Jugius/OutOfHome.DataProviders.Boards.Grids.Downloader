@@ -1,8 +1,7 @@
-﻿
-namespace OutOfHome.DataProviders.Boards.Grids.Downloader.Entities.Common.Enums;
+﻿namespace OutOfHome.DataProviders.Boards.Grids.Downloader.Exceptions;
 
-public enum Status
-{    
+public enum ErrorCode
+{
     Undefined = 0,
     Ok,
     RequestError,
@@ -17,3 +16,4 @@ public enum Status
     //UnknownServerError,   
 
 }
+

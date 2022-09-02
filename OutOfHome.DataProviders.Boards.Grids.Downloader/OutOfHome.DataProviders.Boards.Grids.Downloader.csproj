@@ -11,12 +11,12 @@
     <None Remove="README.md" />
   </ItemGroup>
 
-  <ItemGroup>
-    <EditorConfigFiles Remove="D:\Documents\Programming\Projects\Libraries\OutOfHome.DataProviders.Boards.Grids.Downloader\OutOfHome.DataProviders.Boards.Grids.Downloader\.editorconfig" />
+  <ItemGroup>    
+	  <EditorConfigFiles Remove=".editorconfig" />
   </ItemGroup>
 
-  <ItemGroup>
-    <None Include="D:\Documents\Programming\Projects\Libraries\OutOfHome.DataProviders.Boards.Grids.Downloader\OutOfHome.DataProviders.Boards.Grids.Downloader\.editorconfig" />
+  <ItemGroup>    
+	  <None Include=".editorconfig" />
   </ItemGroup>
 
 </Project>

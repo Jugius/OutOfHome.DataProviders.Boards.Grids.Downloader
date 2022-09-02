@@ -3,7 +3,7 @@ using System.Xml.Serialization;
 
 namespace OutOfHome.DataProviders.Boards.Grids.Downloader.Entities.Octagon;
 
-public class ContentParser : Interfaces.IContentParser<ResponseContent>
+internal class ContentParser : Interfaces.IContentParser<ResponseContent>
 {
     public async Task<ResponseContent> ParseContent(HttpResponseMessage message)
     {

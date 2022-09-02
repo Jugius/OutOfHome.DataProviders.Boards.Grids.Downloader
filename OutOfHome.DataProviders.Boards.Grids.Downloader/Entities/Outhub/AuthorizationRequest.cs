@@ -1,22 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Net.Http;
+﻿using OutOfHome.DataProviders.Boards.Grids.Downloader.Entities.Interfaces;
 
-namespace OutOfHome.DataProviders.Boards.Grids.Downloader.Entities.Outhub.Authorization;
+namespace OutOfHome.DataProviders.Boards.Grids.Downloader.Entities.Outhub;
 
-public class AuthorizationRequest : BaseOuthubRequest, Interfaces.IRequestPost
+public class AuthorizationRequest : IRequestPost
 {
-    protected internal override string BaseUrl => base.BaseUrl + "Account/LogOn";
+    private const string baseUri = "https://outhub.online/Account/LogOn";
     public string UserName { get; set; }
     public string Password { get; set; }
     public bool RememberMe { get; set; }
 
+
+    public Uri GetUri() => new Uri(baseUri);
     public HttpContent GetContent()
     {
-        if (string.IsNullOrEmpty(this.UserName))
+        if (string.IsNullOrEmpty(UserName))
             throw new InvalidOperationException("Empty UserName Field");
 
-        if (string.IsNullOrEmpty(this.Password))
+        if (string.IsNullOrEmpty(Password))
             throw new InvalidOperationException("Empty Password Field");
 
         return new FormUrlEncodedContent(new[]
@@ -25,5 +25,5 @@ public class AuthorizationRequest : BaseOuthubRequest, Interfaces.IRequestPost
                 new KeyValuePair<string, string>("Password", Password),
                 new KeyValuePair<string, string>("RememberMe", RememberMe.ToString())
             });
-    }
+    }    
 }

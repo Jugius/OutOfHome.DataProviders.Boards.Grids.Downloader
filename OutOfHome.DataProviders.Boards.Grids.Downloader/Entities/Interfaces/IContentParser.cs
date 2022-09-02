@@ -1,6 +1,6 @@
 ﻿namespace OutOfHome.DataProviders.Boards.Grids.Downloader.Entities.Interfaces;
 
-public interface IContentParser<TResult>
+internal interface IContentParser<TResult>
     where TResult : new()
 {
     Task<TResult> ParseContent(HttpResponseMessage message);

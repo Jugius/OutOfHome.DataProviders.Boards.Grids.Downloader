@@ -1,7 +1,5 @@
-﻿using System;
-
-namespace OutOfHome.DataProviders.Boards.Grids.Downloader.Entities.Interfaces;
-public interface IRequest
+﻿namespace OutOfHome.DataProviders.Boards.Grids.Downloader.Entities.Interfaces;
+internal interface IRequest
 {
     Uri GetUri();
 }
