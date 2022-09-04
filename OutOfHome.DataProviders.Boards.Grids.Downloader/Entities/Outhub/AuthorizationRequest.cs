@@ -1,4 +1,5 @@
 ﻿using OutOfHome.DataProviders.Boards.Grids.Downloader.Entities.Interfaces;
+using OutOfHome.DataProviders.Boards.Grids.Downloader.Exceptions;
 
 namespace OutOfHome.DataProviders.Boards.Grids.Downloader.Entities.Outhub;
 
@@ -14,10 +15,10 @@ public class AuthorizationRequest : IRequestPost
     public HttpContent GetContent()
     {
         if (string.IsNullOrEmpty(UserName))
-            throw new InvalidOperationException("Empty UserName Field");
+            throw new DownloaderException(ErrorCode.InvalidRequest, "Empty UserName Field");
 
         if (string.IsNullOrEmpty(Password))
-            throw new InvalidOperationException("Empty Password Field");
+            throw new DownloaderException(ErrorCode.InvalidRequest, "Empty Password Field");        
 
         return new FormUrlEncodedContent(new[]
             {

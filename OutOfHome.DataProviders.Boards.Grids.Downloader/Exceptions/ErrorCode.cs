@@ -3,8 +3,8 @@
 public enum ErrorCode
 {
     Undefined = 0,
-    Ok,
-    RequestError,
+
+    InvalidRequest,    
     HttpError,
     ContentParsingError,
     ServerError,
@@ -13,7 +13,6 @@ public enum ErrorCode
     //RequestDenied,        
     //InvalidRequest,       
     //ZeroResults,
-    //UnknownServerError,   
-
+    //UnknownServerError, 
 }
 

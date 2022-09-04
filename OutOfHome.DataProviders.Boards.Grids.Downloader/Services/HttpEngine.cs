@@ -29,9 +29,13 @@ internal sealed class HttpEngine<TRequest, TResult, TParser>
         {
             httpMessage = await ProcessRequestAsync(request, cancellationToken).ConfigureAwait(false);
         }
+        catch (DownloaderException)
+        {
+            throw;
+        }
         catch (Exception ex)
         {
-            throw new DownloaderException(ErrorCode.RequestError, ex.GetBaseException().Message);
+            throw new DownloaderException(ErrorCode.HttpError, ex.GetBaseException().Message);
         }
 
         var response = await ProcessResponseAsync(httpMessage).ConfigureAwait(false);
@@ -96,9 +100,13 @@ internal sealed class HttpEngine<TRequest>
         {
             httpMessage = await ProcessRequestAsync(request, cancellationToken).ConfigureAwait(false);
         }
+        catch (DownloaderException)
+        {
+            throw;
+        }
         catch (Exception ex)
         {
-            throw new DownloaderException(ErrorCode.RequestError, ex.GetBaseException().Message);
+            throw new DownloaderException(ErrorCode.HttpError, ex.GetBaseException().Message);
         }
 
         return ProcessResponse(httpMessage);

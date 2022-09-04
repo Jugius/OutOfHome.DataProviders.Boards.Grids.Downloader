@@ -1,4 +1,6 @@
-﻿namespace OutOfHome.DataProviders.Boards.Grids.Downloader.Entities.Octagon;
+﻿using OutOfHome.DataProviders.Boards.Grids.Downloader.Exceptions;
+
+namespace OutOfHome.DataProviders.Boards.Grids.Downloader.Entities.Octagon;
 public class GetGridRequest : Interfaces.IRequestPost
 {
     private const string baseUri = "https://sales.octagon.com.ua/handler/hnd_addressprogramxml";
@@ -10,7 +12,18 @@ public class GetGridRequest : Interfaces.IRequestPost
     public Uri GetUri() => new Uri(baseUri);
     public HttpContent GetContent()
     {
-        var content = new FormUrlEncodedContent(new[]
+        if(string.IsNullOrEmpty(this.CityId))
+            throw new DownloaderException(ErrorCode.InvalidRequest, "Empty CityId Field.");
+
+        if(PeriodTo < PeriodFrom)
+            throw new DownloaderException(ErrorCode.InvalidRequest, "The end date of the period is earlier than the start date.");
+
+        DateOnly minimalDateFrom = new DateOnly(DateTime.Now.Year, DateTime.Now.Month, 1);
+        if(PeriodFrom < minimalDateFrom)
+            throw new DownloaderException(ErrorCode.InvalidRequest, $"The start date of period can not be earlier than {minimalDateFrom:dd.MM.yyyy}.");
+
+
+        return new FormUrlEncodedContent(new[]
             {
                 new KeyValuePair<string, string>("CityId", CityId),
 
@@ -35,8 +48,6 @@ public class GetGridRequest : Interfaces.IRequestPost
 
                 new KeyValuePair<string, string>("Status", "a")
             });
-
-        return content;
     }   
     
 }
