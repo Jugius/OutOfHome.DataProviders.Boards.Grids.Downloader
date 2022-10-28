@@ -13,6 +13,10 @@ internal class ContentParser : Interfaces.IContentParser<List<BmaBoard>>
         };
         //var boards = await JsonSerializer.DeserializeAsync(await message.Content.ReadAsStreamAsync(), BigmediaJsonContext.Default.ListBmaBoard);
         var boards = await JsonSerializer.DeserializeAsync<BmaBoard[]>(await message.Content.ReadAsStreamAsync(), jsonOptions);
+
+        if (boards == null || boards.Length == 0)
+            throw new Exceptions.DownloaderException(Exceptions.ErrorCode.ServerError, $"Cервер вернул 0 записей.");
+
         foreach (var brd in boards)
         {
             brd.PhotoUrl = NormalizeUri(brd.PhotoUrl);
@@ -30,11 +34,3 @@ internal class ContentParser : Interfaces.IContentParser<List<BmaBoard>>
         return Uri.TryCreate(uri, UriKind.Absolute, out Uri u) ? u.ToString() : null;
     }
 }
-
-//[JsonSerializable(typeof(List<BmaBoard>))]
-//[JsonSourceGenerationOptions(GenerationMode =JsonSourceGenerationMode.Metadata, number )]
-//[JsonNumberHandling(JsonNumberHandling.AllowReadingFromString)]
-//internal partial class BigmediaJsonContext : JsonSerializerContext
-//{ 
-
-//}
