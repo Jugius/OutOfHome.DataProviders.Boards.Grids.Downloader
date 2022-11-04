@@ -1,7 +1,7 @@
 ﻿using System.Text.Json.Serialization;
 
 namespace OutOfHome.DataProviders.Boards.Grids.Downloader.Entities.Bigmedia.Common;
-public class BmaBoard
+public class Board
 {
     [JsonPropertyName("address")]
     public string Address { get; set; }

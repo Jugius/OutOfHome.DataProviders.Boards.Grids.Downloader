@@ -3,16 +3,16 @@ using System.Text.Json.Serialization;
 using System.Text.Json;
 
 namespace OutOfHome.DataProviders.Boards.Grids.Downloader.Entities.Bigmedia;
-internal class ContentParser : Interfaces.IContentParser<List<BmaBoard>>
+internal class ContentParser : Interfaces.IContentParser<List<Board>>
 {
-    public async Task<List<BmaBoard>> ParseContent(HttpResponseMessage message)
+    public async Task<List<Board>> ParseContent(HttpResponseMessage message)
     {
         var jsonOptions = new JsonSerializerOptions()
         {
             NumberHandling = JsonNumberHandling.AllowReadingFromString
         };
         //var boards = await JsonSerializer.DeserializeAsync(await message.Content.ReadAsStreamAsync(), BigmediaJsonContext.Default.ListBmaBoard);
-        var boards = await JsonSerializer.DeserializeAsync<BmaBoard[]>(await message.Content.ReadAsStreamAsync(), jsonOptions);
+        var boards = await JsonSerializer.DeserializeAsync<Board[]>(await message.Content.ReadAsStreamAsync(), jsonOptions);
 
         if (boards == null || boards.Length == 0)
             throw new Exceptions.DownloaderException(Exceptions.ErrorCode.ServerError, $"Cервер вернул 0 записей.");
