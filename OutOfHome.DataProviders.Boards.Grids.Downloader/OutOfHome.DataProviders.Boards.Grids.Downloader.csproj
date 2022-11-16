@@ -4,7 +4,6 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <RootNamespace>OutOfHome.DataProviders.Boards.Grids.Downloader</RootNamespace>
-    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <AssemblyName>OohelpSoft.OutOfHome.DataProviders.Boards.Grids.Downloader</AssemblyName>
 
 	  <Version>1.0.3</Version>
