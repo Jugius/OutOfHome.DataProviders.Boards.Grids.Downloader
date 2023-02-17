@@ -1,4 +1,4 @@
-﻿using OutOfHome.DataProviders.Boards.Grids.Downloader.Entities.Bigmedia.Common;
+﻿using OutOfHome.DataProviders.Boards.Grids.Downloader.Entities.Common;
 using OutOfHome.DataProviders.Boards.Grids.Downloader.Entities.Interfaces;
 
 namespace OutOfHome.DataProviders.Boards.Grids.Downloader.Entities.Bigmedia;

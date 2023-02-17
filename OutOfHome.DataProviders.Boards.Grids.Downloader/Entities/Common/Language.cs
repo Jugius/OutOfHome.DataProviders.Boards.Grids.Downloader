@@ -1,21 +1,21 @@
-﻿namespace OutOfHome.DataProviders.Boards.Grids.Downloader.Entities.Bigmedia.Common;
+﻿namespace OutOfHome.DataProviders.Boards.Grids.Downloader.Entities.Common;
 
 public enum Language
 {
     /// <summary>
     /// English
     /// </summary>
-    English,
+    English = 3,
 
     /// <summary>
     /// Russian
     /// </summary>
-    Russian,
+    Russian = 1,
 
     /// <summary>
     /// Ukrainian
     /// </summary>
-    Ukrainian
+    Ukrainian = 2
 }
 internal static class LanguageExtention
 {
@@ -23,6 +23,7 @@ internal static class LanguageExtention
     {
         Language.English => "en",
         Language.Russian => "ru",
-        Language.Ukrainian => "ukr"
+        Language.Ukrainian => "ukr",
+        _ => throw new InvalidOperationException("Unsupported request laguage: " + language)
     };
 }
