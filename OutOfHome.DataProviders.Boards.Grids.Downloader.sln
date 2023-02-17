@@ -7,7 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OutOfHome.DataProviders.Boa
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".tests", ".tests", "{5EF4CB06-424A-4EDE-89BF-D6614657B630}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Downloader.Test", ".tests\Downloader.Test\Downloader.Test.csproj", "{6905C6F3-26D5-4C57-9A3C-8F99E403CBDF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Downloader.Test", ".tests\Downloader.Test\Downloader.Test.csproj", "{6905C6F3-26D5-4C57-9A3C-8F99E403CBDF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OohelpGetGridBenchmark", ".tests\OohelpGetGridBenchmark\OohelpGetGridBenchmark.csproj", "{9C9968DF-A6FE-40B0-B57A-49DF158AFE9D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,12 +25,17 @@ Global
 		{6905C6F3-26D5-4C57-9A3C-8F99E403CBDF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6905C6F3-26D5-4C57-9A3C-8F99E403CBDF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6905C6F3-26D5-4C57-9A3C-8F99E403CBDF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C9968DF-A6FE-40B0-B57A-49DF158AFE9D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C9968DF-A6FE-40B0-B57A-49DF158AFE9D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C9968DF-A6FE-40B0-B57A-49DF158AFE9D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C9968DF-A6FE-40B0-B57A-49DF158AFE9D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{6905C6F3-26D5-4C57-9A3C-8F99E403CBDF} = {5EF4CB06-424A-4EDE-89BF-D6614657B630}
+		{9C9968DF-A6FE-40B0-B57A-49DF158AFE9D} = {5EF4CB06-424A-4EDE-89BF-D6614657B630}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B7EF85D2-2E96-4EBD-B736-95D3C4F329DB}
