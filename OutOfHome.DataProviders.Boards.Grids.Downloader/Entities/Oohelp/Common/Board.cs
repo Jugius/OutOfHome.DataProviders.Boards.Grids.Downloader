@@ -5,7 +5,7 @@ namespace OutOfHome.DataProviders.Boards.Grids.Downloader.Entities.Oohelp.Common
 public class Board
 {
     [JsonPropertyName("sp")]
-    public string Supplier { get; set; }
+    public int SupplierID { get; set; }
 
 
     [JsonPropertyName("code")]
