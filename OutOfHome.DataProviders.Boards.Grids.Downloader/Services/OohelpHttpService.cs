@@ -5,8 +5,8 @@ namespace OutOfHome.DataProviders.Boards.Grids.Downloader.Services;
 public class OohelpHttpService
 {
     private readonly HttpClient _httpClient;
-    private readonly HttpEngine<GetGridJsonRequest, ResponseContent, ContentParser> _getGridJsonEngine;
-    private readonly HttpEngine<GetGridZipRequest, ResponseContent, ZipContentParser> _getGridZipEngine;
+    private readonly HttpEngine<GetGridExtendedRequest, ResponseContent, ZipContentParser> _getGridExtendedEngine;
+    private readonly HttpEngine<GetGridRequest, ResponseContent, ZipContentParser> _getGridEngine;
 
     public OohelpHttpService(HttpClient httpClient)
     {
@@ -18,7 +18,6 @@ public class OohelpHttpService
     {
     }
 
-    public async Task<ResponseContent> GetGrid(GetGridJsonRequest request) => await _getGridJsonEngine.QueryAsync(request);
     public async Task<ResponseContent> GetGrid(GetGridZipRequest request) => await _getGridZipEngine.QueryAsync(request);
 
 
