@@ -11,14 +11,15 @@ public class OohelpHttpService
     public OohelpHttpService(HttpClient httpClient)
     {
         _httpClient = httpClient;
-        _getGridJsonEngine = new HttpEngine<GetGridJsonRequest, ResponseContent, ContentParser>(_httpClient);
-        _getGridZipEngine = new HttpEngine<GetGridZipRequest, ResponseContent, ZipContentParser>(_httpClient);
+        _getGridExtendedEngine = new HttpEngine<GetGridExtendedRequest, ResponseContent, ZipContentParser>(_httpClient);
+        _getGridEngine = new HttpEngine<GetGridRequest, ResponseContent, ZipContentParser>(_httpClient);
     }
     public OohelpHttpService() : this(HttpClientFactory.CreateDefaultHttpClient())
     {
     }
 
-    public async Task<ResponseContent> GetGrid(GetGridZipRequest request) => await _getGridZipEngine.QueryAsync(request);
 
+    public async Task<ResponseContent> GetGrid(GetGridRequest request) => await _getGridEngine.QueryAsync(request);
+    public async Task<ResponseContent> GetGrid(GetGridExtendedRequest request) => await _getGridExtendedEngine.QueryAsync(request);
 
 }
