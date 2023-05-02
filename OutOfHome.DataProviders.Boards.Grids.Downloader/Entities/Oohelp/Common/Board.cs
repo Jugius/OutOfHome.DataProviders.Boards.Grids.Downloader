@@ -4,6 +4,9 @@ namespace OutOfHome.DataProviders.Boards.Grids.Downloader.Entities.Oohelp.Common
 
 public class Board
 {
+    [JsonPropertyName("gpr")]
+    public int GridProvider { get; set; }
+
     [JsonPropertyName("sp")]
     public int SupplierId { get; set; }
 
