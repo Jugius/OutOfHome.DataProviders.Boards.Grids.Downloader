@@ -5,7 +5,7 @@ namespace OutOfHome.DataProviders.Boards.Grids.Downloader.Entities.Oohelp.Common
 public class Board
 {
     [JsonPropertyName("sp")]
-    public int SupplierID { get; set; }
+    public int SupplierId { get; set; }
 
 
     [JsonPropertyName("code")]
@@ -13,7 +13,7 @@ public class Board
 
 
     [JsonPropertyName("city")]
-    public Guid CityID { get; set; }
+    public Guid CityId { get; set; }
 
 
     [JsonPropertyName("dist")]
@@ -41,7 +41,7 @@ public class Board
 
 
     [JsonPropertyName("type")]
-    public string Type { get; set; }
+    public int TypeId { get; set; }
 
 
     [JsonPropertyName("lig")]
