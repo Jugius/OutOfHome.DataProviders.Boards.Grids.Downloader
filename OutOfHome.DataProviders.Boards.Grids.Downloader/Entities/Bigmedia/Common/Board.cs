@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using OutOfHome.DataProviders.Boards.Grids.Downloader.JsonConverters;
+using System.Text.Json.Serialization;
 
 namespace OutOfHome.DataProviders.Boards.Grids.Downloader.Entities.Bigmedia.Common;
 public class Board
@@ -22,9 +23,11 @@ public class Board
     public int IdNetwork { get; set; }
 
     [JsonPropertyName("lon")]
+    [JsonConverter(typeof(StringToDoubleConverter))]
     public double? Lon { get; set; }
 
     [JsonPropertyName("lat")]
+    [JsonConverter(typeof(StringToDoubleConverter))]
     public double? Lat { get; set; }
 
     [JsonPropertyName("grp")]
