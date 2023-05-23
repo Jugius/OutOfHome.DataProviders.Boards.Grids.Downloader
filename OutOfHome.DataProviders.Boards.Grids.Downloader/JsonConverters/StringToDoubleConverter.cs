@@ -21,6 +21,6 @@ internal class StringToDoubleConverter : JsonConverter<double>
         double value,
         JsonSerializerOptions options)
     {
-        throw new NotImplementedException();
+        writer.WriteStringValue(value.ToString(CultureInfo.InvariantCulture));
     }
 }
