@@ -12,17 +12,23 @@ internal class ContentParser : Interfaces.IContentParser<List<Board>>
             NumberHandling = JsonNumberHandling.AllowReadingFromString
         };
         //var boards = await JsonSerializer.DeserializeAsync(await message.Content.ReadAsStreamAsync(), BigmediaJsonContext.Default.ListBmaBoard);
-        var boards = await JsonSerializer.DeserializeAsync<Board[]>(await message.Content.ReadAsStreamAsync(), jsonOptions);
+        var boards = await JsonSerializer.DeserializeAsync<InternalBmaBoard[]>(await message.Content.ReadAsStreamAsync(), jsonOptions);
 
         if (boards == null || boards.Length == 0)
             throw new Exceptions.DownloaderException(Exceptions.ErrorCode.ServerError, $"Cервер вернул 0 записей.");
 
+        List<Board> result = new List<Board>(boards.Length);
+
         foreach (var brd in boards)
         {
+            if (brd.Lat.GetValueOrDefault(0) == 0 || brd.Lon.GetValueOrDefault(0) == 0)
+                continue;
+
             brd.PhotoUrl = NormalizeUri(brd.PhotoUrl);
             brd.SchemaUrl = NormalizeUri(brd.SchemaUrl);
+            result.Add(ToBoard(brd));
         }
-        return boards.ToList();
+        return result;
     }
     private static string NormalizeUri(string uri)
     {
@@ -33,4 +39,26 @@ internal class ContentParser : Interfaces.IContentParser<List<Board>>
 
         return Uri.TryCreate(uri, UriKind.Absolute, out Uri u) ? u.ToString() : null;
     }
+
+    private static Board ToBoard(InternalBmaBoard b) =>
+        new Board
+        {
+            Address = b.Address,
+            Angle = b.Angle,
+            Grp = b.Grp,
+            IdCatab = b.IdCatab,
+            IdCity = b.IdCity,
+            IdNetwork = b.IdNetwork,
+            IdSize = b.IdSize,
+            IdSupplier = b.IdSupplier,
+            Lat = b.Lat,
+            Lon = b.Lon,
+            Light = b.Light,
+            Ots = b.Ots,
+            PhotoUrl = b.PhotoUrl,
+            Price = b.Price,
+            SchemaUrl = b.SchemaUrl,
+            Sides = b.Sides,
+            SupplierSidetype = b.SupplierSidetype,
+        };
 }
