@@ -63,7 +63,7 @@ public class Board
     //public string Streets { get; set; }
 
     [JsonPropertyName("price")]
-    public float? Price { get; set; }
+    public int? Price { get; set; }
 
     [JsonPropertyName("supplier_sidetype")]
     public string SupplierSidetype { get; set; }

@@ -100,7 +100,7 @@ public class Board
 
 
     [JsonPropertyName("pr")]
-    public float Price { get; set; }
+    public int Price { get; set; }
 
 
     [JsonPropertyName("prs")]

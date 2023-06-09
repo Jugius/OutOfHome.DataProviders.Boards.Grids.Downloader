@@ -6,3 +6,4 @@
 using System.Diagnostics.CodeAnalysis;
 
 [assembly: SuppressMessage("Performance", "U2U1025:Avoid instantiating HttpClient")]
+[assembly: SuppressMessage("Style", "IDE0090:Use 'new(...)'")]

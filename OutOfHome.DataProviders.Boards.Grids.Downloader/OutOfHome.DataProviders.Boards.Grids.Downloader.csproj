@@ -1,13 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFrameworks>net6.0;net7.0</TargetFrameworks>
     <ImplicitUsings>enable</ImplicitUsings>
 	<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <RootNamespace>OutOfHome.DataProviders.Boards.Grids.Downloader</RootNamespace>
     <AssemblyName>OohelpSoft.OutOfHome.DataProviders.Boards.Grids.Downloader</AssemblyName>
 
-	  <Version>1.0.12</Version>
+	  <Version>1.0.14</Version>
 	  <Authors>OoHelp.Net</Authors>
 	  <Company>OoHelp.Net</Company>
 	  <PackageId>$(AssemblyName)</PackageId>

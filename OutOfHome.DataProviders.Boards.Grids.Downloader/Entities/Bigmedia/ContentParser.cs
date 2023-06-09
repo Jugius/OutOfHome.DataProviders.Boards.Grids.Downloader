@@ -11,24 +11,61 @@ internal class ContentParser : Interfaces.IContentParser<List<Board>>
         {
             NumberHandling = JsonNumberHandling.AllowReadingFromString
         };
-        //var boards = await JsonSerializer.DeserializeAsync(await message.Content.ReadAsStreamAsync(), BigmediaJsonContext.Default.ListBmaBoard);
-        var boards = await JsonSerializer.DeserializeAsync<InternalBmaBoard[]>(await message.Content.ReadAsStreamAsync(), jsonOptions);
 
-        if (boards == null || boards.Length == 0)
-            throw new Exceptions.DownloaderException(Exceptions.ErrorCode.ServerError, $"Cервер вернул 0 записей.");
+        Board[] boards;
 
-        List<Board> result = new List<Board>(boards.Length);
+        using (var readingStream = await message.Content.ReadAsStreamAsync())
+        {
+            try
+            {
+                boards = await JsonSerializer.DeserializeAsync<Board[]>(readingStream, jsonOptions);
+                
+                if (boards == null || boards.Length == 0)
+                    throw new Exceptions.DownloaderException(Exceptions.ErrorCode.ServerError, $"Cервер вернул 0 записей.");
+            }
+            catch (JsonException)
+            {                
+                readingStream.Position = 0;
+                var internalBoards = await JsonSerializer.DeserializeAsync<InternalBmaBoard[]>(await message.Content.ReadAsStreamAsync(), jsonOptions);
+                boards = FilterAndConvertToBoards(internalBoards).ToArray();
+            }
+        }    
 
         foreach (var brd in boards)
         {
-            if (brd.Lat.GetValueOrDefault(0) == 0 || brd.Lon.GetValueOrDefault(0) == 0)
-                continue;
-
             brd.PhotoUrl = NormalizeUri(brd.PhotoUrl);
             brd.SchemaUrl = NormalizeUri(brd.SchemaUrl);
-            result.Add(ToBoard(brd));
         }
-        return result;
+        return boards.ToList();
+    }
+    private static IEnumerable<Board> FilterAndConvertToBoards(IEnumerable<InternalBmaBoard> boards)
+    {
+        foreach (var b in boards)
+        {
+            if (b.Lat.GetValueOrDefault(0) == 0 || b.Lon.GetValueOrDefault(0) == 0)
+                continue;
+
+            yield return new Board
+            {
+                Address = b.Address,
+                Angle = b.Angle,
+                Grp = b.Grp,
+                IdCatab = b.IdCatab,
+                IdCity = b.IdCity,
+                IdNetwork = b.IdNetwork,
+                IdSize = b.IdSize,
+                IdSupplier = b.IdSupplier,
+                Lat = b.Lat,
+                Lon = b.Lon,
+                Light = b.Light,
+                Ots = b.Ots,
+                PhotoUrl = b.PhotoUrl,
+                Price = b.Price,
+                SchemaUrl = b.SchemaUrl,
+                Sides = b.Sides,
+                SupplierSidetype = b.SupplierSidetype,
+            };
+        }
     }
     private static string NormalizeUri(string uri)
     {
@@ -39,26 +76,4 @@ internal class ContentParser : Interfaces.IContentParser<List<Board>>
 
         return Uri.TryCreate(uri, UriKind.Absolute, out Uri u) ? u.ToString() : null;
     }
-
-    private static Board ToBoard(InternalBmaBoard b) =>
-        new Board
-        {
-            Address = b.Address,
-            Angle = b.Angle,
-            Grp = b.Grp,
-            IdCatab = b.IdCatab,
-            IdCity = b.IdCity,
-            IdNetwork = b.IdNetwork,
-            IdSize = b.IdSize,
-            IdSupplier = b.IdSupplier,
-            Lat = b.Lat,
-            Lon = b.Lon,
-            Light = b.Light,
-            Ots = b.Ots,
-            PhotoUrl = b.PhotoUrl,
-            Price = b.Price,
-            SchemaUrl = b.SchemaUrl,
-            Sides = b.Sides,
-            SupplierSidetype = b.SupplierSidetype,
-        };
 }

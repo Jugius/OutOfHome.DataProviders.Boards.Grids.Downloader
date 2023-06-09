@@ -1,4 +1,5 @@
-﻿using System.Xml.Serialization;
+﻿using System.Globalization;
+using System.Xml.Serialization;
 
 namespace OutOfHome.DataProviders.Boards.Grids.Downloader.Entities.Octagon.Common;
 
@@ -7,6 +8,9 @@ namespace OutOfHome.DataProviders.Boards.Grids.Downloader.Entities.Octagon.Commo
 [XmlType(AnonymousType = true)]
 public class OctagonBoard
 {
+    private static readonly NumberFormatInfo parsePointFormatter = new NumberFormatInfo { NumberDecimalSeparator = "." };
+    private const NumberStyles parseStyle = NumberStyles.AllowDecimalPoint;
+
     [XmlAttribute(AttributeName = "FaceNumber")]
     public string SupplierCode { get; set; }
 

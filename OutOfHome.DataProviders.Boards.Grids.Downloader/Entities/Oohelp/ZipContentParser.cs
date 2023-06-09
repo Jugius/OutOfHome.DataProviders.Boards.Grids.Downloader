@@ -1,4 +1,5 @@
 ﻿using OutOfHome.DataProviders.Boards.Grids.Downloader.Entities.Oohelp.Common;
+using OutOfHome.DataProviders.Boards.Grids.Downloader.JsonConverters;
 using System.IO.Compression;
 using System.Text.Json;
 using System.Text.Json.Serialization;

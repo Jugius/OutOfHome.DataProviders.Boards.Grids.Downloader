@@ -11,5 +11,5 @@ public class PricePeriod
     public DateOnly End { get; set; }
 
     [JsonPropertyName("val")]
-    public float Value { get; set; }
+    public int Value { get; set; }
 }
