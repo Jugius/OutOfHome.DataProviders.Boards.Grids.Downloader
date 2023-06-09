@@ -18,5 +18,6 @@ public class BigmediaHttpService
     {
     }
     public async Task<List<Board>> GetGrid(GetGridRequest request) => await _getGridEngine.QueryAsync(request);
+    public async Task<string> GetResponseStringAsync(GetGridRequest request) => await _getGridEngine.GetResponseStringAsync(request);
     public async Task<bool> Authenticate(AuthenticateRequest request) => await _authenticateEngine.QueryAsync(request);
 }

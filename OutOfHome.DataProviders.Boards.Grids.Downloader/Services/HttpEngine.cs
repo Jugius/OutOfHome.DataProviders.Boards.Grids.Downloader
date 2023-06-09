@@ -41,7 +41,20 @@ internal sealed class HttpEngine<TRequest, TResult, TParser>
         var response = await ProcessResponseAsync(httpMessage).ConfigureAwait(false);
 
         return response;
-
+    }
+    public async Task<string> GetResponseStringAsync(TRequest request, CancellationToken cancellationToken = default)
+    {
+        using (HttpResponseMessage httpMessage = await ProcessRequestAsync(request, cancellationToken).ConfigureAwait(false))
+        {
+            if (httpMessage.IsSuccessStatusCode)
+            {
+                return await httpMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
+            }
+            else
+            {
+                throw new DownloaderException(ErrorCode.HttpError, httpMessage.ReasonPhrase);
+            }
+        }
     }
     private async Task<HttpResponseMessage> ProcessRequestAsync(TRequest request, CancellationToken cancellationToken = default)
     {
