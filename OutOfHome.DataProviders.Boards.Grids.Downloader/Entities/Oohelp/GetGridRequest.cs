@@ -22,6 +22,10 @@ public class GetGridRequest : IRequestPost
     public OctagonExportMode Octagon { get; set; }
 
 
+    [JsonPropertyName("perekhid")]
+    public PerekhidExportMode Perekhid { get; set; }
+
+
     [JsonPropertyName("output")]
     public OutputFormat OutputFormat { get; } = OutputFormat.zip;
 

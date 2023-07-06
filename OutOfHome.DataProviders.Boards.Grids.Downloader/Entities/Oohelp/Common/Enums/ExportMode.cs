@@ -11,7 +11,13 @@ public enum BmaExportMode
 public enum OctagonExportMode
 {
     None = 0,
-    All = 1
+    Octagon = 1
+}
+
+public enum PerekhidExportMode
+{
+    None = 0,
+    Perekhid = 1
 }
 
 public enum OuthubExportMode
