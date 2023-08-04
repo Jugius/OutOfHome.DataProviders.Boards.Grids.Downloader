@@ -28,6 +28,8 @@ internal class ContentParser : Interfaces.IContentParser<ResponseContent>
 
             var propertiesFields = ContentParser.ExtractPropertiesFields(sheet, headerRow).ToList();
             var occupationFields = ExtractBoardOccupationFields(propertiesFields).ToList();
+            int supplierCodeColumn = propertiesFields.FirstOrDefault(a => a is ExcelFieldBoardProperty p && p.Property == BoardProperty.SupplierCode).Column;
+
 
             DateOnly visibleStart = occupationFields.Min(a => a.Start);
             DateOnly visibleEnd = occupationFields.Max(a => a.End);
@@ -37,6 +39,13 @@ internal class ContentParser : Interfaces.IContentParser<ResponseContent>
             list = new List<PerekhidBoard>(rowsNumber - headerRow + 1);
             for (int i = headerRow + 2; i <= rowsNumber; i++)
             {
+                //Проверяем содержимое ячейки в столбце операторского кода,
+                //если код парсится в int, значит место баинговое, игнорируем
+                if (int.TryParse(sheet.Cells[i, supplierCodeColumn].GetValue<string>(), out _))
+                {
+                    continue;
+                }                
+
                 PerekhidBoard board = new PerekhidBoard
                 {
                     VisibleStart = visibleStart,
