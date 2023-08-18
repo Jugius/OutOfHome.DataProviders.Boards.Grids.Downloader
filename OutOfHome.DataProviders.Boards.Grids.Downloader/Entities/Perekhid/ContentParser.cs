@@ -4,7 +4,7 @@ using OutOfHome.DataProviders.Boards.Grids.Downloader.Entities.Perekhid.Common.E
 using OutOfHome.DataProviders.Boards.Grids.Downloader.Entities.Perekhid.Parsing;
 
 namespace OutOfHome.DataProviders.Boards.Grids.Downloader.Entities.Perekhid;
-internal class ContentParser : Interfaces.IContentParser<ResponseContent>
+public class ContentParser : Interfaces.IContentParser<ResponseContent>
 {
     public ContentParser()
     {
@@ -15,9 +15,8 @@ internal class ContentParser : Interfaces.IContentParser<ResponseContent>
         var excel = await message.Content.ReadAsStreamAsync();
         return ReadFromFile(excel);
     }
-    private ResponseContent ReadFromFile(Stream stream)
+    public ResponseContent ReadFromFile(Stream stream)
     {
-        
         List<PerekhidBoard> list;
         DateTime created;
         using (ExcelPackage excel = new ExcelPackage(stream))
