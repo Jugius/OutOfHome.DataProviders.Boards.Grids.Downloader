@@ -16,7 +16,7 @@ public class ContentParser : Interfaces.IContentParser<ResponseContent>
         return ReadFromFile(excel);
     }
     public ResponseContent ReadFromFile(Stream stream)
-    {
+    {        
         List<PerekhidBoard> list;
         DateTime created;
         using (ExcelPackage excel = new ExcelPackage(stream))
@@ -56,7 +56,7 @@ public class ContentParser : Interfaces.IContentParser<ResponseContent>
                     field.SetPropertyValue(sheet.Cells[i, field.Column], board);
                 }
 
-                board.OccupationPeriods = ContentParser.CompressPeriods(board.OccupationPeriods);
+                    board.OccupationPeriods = ContentParser.CompressPeriods(board.OccupationPeriods);
 
                 list.Add(board);
             }            
@@ -178,7 +178,7 @@ public class ContentParser : Interfaces.IContentParser<ResponseContent>
         { "авг", 8 },
         { "сен", 9 },
         { "окт", 10 },
-        { "ноя", 10 },
+        { "ноя", 11 },
         { "дек", 12 }
     };
 }
