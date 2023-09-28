@@ -10,7 +10,7 @@ internal class ContentParser : Interfaces.IContentParser<ResponseContent>
         var rawXml = await message.Content.ReadAsStringAsync().ConfigureAwait(false);
 
         if (string.IsNullOrEmpty(rawXml))
-            throw new Exception("Сервер вернул нулевой результат.}");
+            throw new Exceptions.DownloaderException(Exceptions.ErrorCode.ServerError, "Сервер вернул нулевой результат.");
 
         XmlSerializer formatter = new XmlSerializer(typeof(ResponseContent));
 
