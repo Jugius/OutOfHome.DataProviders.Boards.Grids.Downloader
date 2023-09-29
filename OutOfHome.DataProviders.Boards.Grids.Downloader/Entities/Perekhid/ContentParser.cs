@@ -12,8 +12,19 @@ public class ContentParser : Interfaces.IContentParser<ResponseContent>
     }
     public async Task<ResponseContent> ParseContent(HttpResponseMessage message)
     {
-        var excel = await message.Content.ReadAsStreamAsync();
-        return ReadFromFile(excel);
+        using var stream = await message.Content.ReadAsStreamAsync();
+        try
+        {
+            return ReadFromFile(stream);
+        }
+        catch (Exceptions.DownloaderException)
+        {
+            throw;
+        }
+        catch (Exception ex)
+        {
+            throw new Exceptions.DownloaderException(Exceptions.ErrorCode.ContentParsingError, "Ошибка чтения контента: " + ex.GetBaseException().Message);
+        }
     }
     public ResponseContent ReadFromFile(Stream stream)
     {        
@@ -25,8 +36,13 @@ public class ContentParser : Interfaces.IContentParser<ResponseContent>
             int headerRow = ContentParser.FindTableHeaderRow(sheet);
             created = ContentParser.FindCreationTime(sheet);           
 
-            var propertiesFields = ContentParser.ExtractPropertiesFields(sheet, headerRow).ToList();
+            var propertiesFields = ExtractPropertiesFields(sheet, headerRow).ToList();
             var occupationFields = ExtractBoardOccupationFields(propertiesFields).ToList();
+
+            //если количество столбцов с занятостью == 0 то выкидываем ошибку
+            if (occupationFields.Count == 0)
+                throw new Exceptions.DownloaderException(Exceptions.ErrorCode.ContentParsingError, "Не найдены столбцы с занятостью");
+
             int supplierCodeColumn = propertiesFields.FirstOrDefault(a => a is ExcelFieldBoardProperty p && p.Property == BoardProperty.SupplierCode).Column;
 
 
@@ -55,9 +71,8 @@ public class ContentParser : Interfaces.IContentParser<ResponseContent>
                 {
                     field.SetPropertyValue(sheet.Cells[i, field.Column], board);
                 }
-
-                    board.OccupationPeriods = ContentParser.CompressPeriods(board.OccupationPeriods);
-
+                
+                board.OccupationPeriods = ContentParser.CompressPeriods(board.OccupationPeriods);
                 list.Add(board);
             }            
         }
@@ -110,28 +125,40 @@ public class ContentParser : Interfaces.IContentParser<ResponseContent>
             if(headerFirstColumn.Equals(value, StringComparison.OrdinalIgnoreCase))
                 return i;
         }
-        throw new Exception($"Заголовок таблицы не найден по ячейке {headerFirstColumn} первого столбца");
+        throw new Exceptions.DownloaderException(Exceptions.ErrorCode.ContentParsingError, $"Заголовок таблицы не найден по ключевому слову '{headerFirstColumn}' для первого столбца");
     }
     private static DateTime FindCreationTime(ExcelWorksheet worksheet)
     {
-        const string checkString = "сетка занятости на ";
+        const string checkStringRu = "сетка занятости на ";
+        const string checkStringUa = "сітка зайнятості на ";
 
         for (int i = 1; i <= 10; i++)
         {
             var value = worksheet.Cells[i, 1].GetValue<string>();
-            if (!string.IsNullOrEmpty(value) && value.Contains(checkString, StringComparison.OrdinalIgnoreCase))
+            if (!string.IsNullOrEmpty(value))
             {
-                try
+                if (value.Contains(checkStringRu, StringComparison.OrdinalIgnoreCase))
                 {
-                    return DateTime.ParseExact(value.Replace(checkString, null), "dd.MM.yyyy HH:mm", null);
+                    return ExtractCreationDateTime(value, checkStringRu);
                 }
-                catch 
-                {
-                    return DateTime.Now;
-                }                 
+                else if (value.Contains(checkStringUa, StringComparison.OrdinalIgnoreCase))
+                { 
+                    return ExtractCreationDateTime(value,checkStringUa);
+                }               
             }
         }
         return DateTime.Now;
+    }
+    private static DateTime ExtractCreationDateTime(string cellValue, string removingString)
+    {
+        try
+        {
+            return DateTime.ParseExact(cellValue.Replace(removingString, null, StringComparison.OrdinalIgnoreCase), "dd.MM.yyyy HH:mm", null);
+        }
+        catch
+        {
+            return DateTime.Now;
+        }
     }
     private static IEnumerable<ExcelFieldBase> ExtractPropertiesFields(ExcelWorksheet worksheet, int row)
     {
@@ -179,6 +206,20 @@ public class ContentParser : Interfaces.IContentParser<ResponseContent>
         { "сен", 9 },
         { "окт", 10 },
         { "ноя", 11 },
-        { "дек", 12 }
+        { "дек", 12 },
+
+
+        { "СІЧ", 1 },
+        { "ЛЮТ", 2 },
+        { "БЕР", 3 },
+        { "КВІ", 4 },
+        { "ТРА", 5 },
+        { "ЧЕР", 6 },
+        { "ЛИП", 7 },
+        { "СЕР", 8 },
+        { "ВЕР", 9 },
+        { "ЖОВ", 10 },
+        { "ЛИС", 11 },
+        { "ГРУ", 12 }
     };
 }
