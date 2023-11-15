@@ -14,6 +14,8 @@
 	  <Copyright>OoHelp.Net</Copyright>
 	  <Description>Библиотека загрузки сеток занятости основных OOH операторов (Украина)</Description>
 	  <PackageLicenseExpression>MIT</PackageLicenseExpression>
+	  <RepositoryUrl>https://github.com/Jugius/OutOfHome.DataProviders.Boards.Grids.Downloader.git</RepositoryUrl>
+	  <RepositoryType>git</RepositoryType>
   </PropertyGroup>
 
   <ItemGroup>
