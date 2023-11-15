@@ -171,11 +171,38 @@ public class ContentParser : Interfaces.IContentParser<ResponseContent>
             {
                 yield return new ExcelFieldBoardProperty(i, property);
             }
-            else if(_monthNumbers.TryGetValue(headerCellValue, out int monthNum))
+            else if(TryParseStartDay(headerCellValue, out DateOnly date))
             {
-                yield return new ExcelFieldBoardOccupation(i, new DateOnly(DateTime.Now.Year, monthNum, 1));
+                yield return new ExcelFieldBoardOccupation(i, date);
             }
         }
+    }
+
+    private static bool TryParseStartDay(string value, out DateOnly result)
+    {
+        int monthNum;
+
+        // проверяем значение на наличие в словаре, если ДА, значит это значение месяца текущего года, напр. "ГРУ" - декабрь текущего года.
+        if (_monthNumbers.TryGetValue(value, out monthNum))
+        {
+            result = new DateOnly(DateTime.Now.Year, monthNum, 1);
+            return true;
+        }
+
+        // режем значение по ' ', должно получиться два значения, 1 - название месяца, 2 - год, напр "КВІ 24" - апрель 2024.
+        var values = value.Split(' ');
+
+        if (values != null 
+            && values.Length == 2
+            && _monthNumbers.TryGetValue(values[0], out monthNum) 
+            && int.TryParse(values[1], out int yearNum))
+        {
+            result = new DateOnly(2000 + yearNum,  monthNum, 1);
+            return true;
+        }
+
+        result = DateOnly.MinValue;
+        return false;
     }
 
     private static readonly Dictionary<string, BoardProperty> _headersToProperty = new Dictionary<string, BoardProperty>(StringComparer.OrdinalIgnoreCase)
