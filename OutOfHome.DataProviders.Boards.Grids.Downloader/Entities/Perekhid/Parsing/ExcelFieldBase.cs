@@ -1,5 +1,4 @@
-﻿
-using OfficeOpenXml;
+﻿using OfficeOpenXml;
 using OutOfHome.DataProviders.Boards.Grids.Downloader.Entities.Perekhid.Common;
 
 namespace OutOfHome.DataProviders.Boards.Grids.Downloader.Entities.Perekhid.Parsing;
