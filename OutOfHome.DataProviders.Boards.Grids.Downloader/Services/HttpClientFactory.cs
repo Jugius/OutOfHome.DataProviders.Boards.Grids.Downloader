@@ -19,7 +19,9 @@ internal class HttpClientFactory
     {
         var httpClientHandler = new HttpClientHandler
         {
-            SslProtocols = SslProtocols.None
+            SslProtocols = SslProtocols.None,
+            UseCookies = true,
+            CookieContainer = new CookieContainer()
         };
 
         if (httpClientHandler.SupportsAutomaticDecompression)

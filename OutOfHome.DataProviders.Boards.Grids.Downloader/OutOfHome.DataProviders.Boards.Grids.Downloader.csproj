@@ -36,6 +36,7 @@
     <PackageReference Include="EPPlus" Version="7.0.1">
       <PrivateAssets>compile</PrivateAssets>
     </PackageReference>
+    <PackageReference Include="PuppeteerSharp" Version="13.0.2" />
   </ItemGroup>
 
 </Project>
