@@ -1,18 +1,15 @@
 ﻿using OutOfHome.DataProviders.Boards.Grids.Downloader.Entities.Perekhid;
-using OutOfHome.DataProviders.Boards.Grids.Downloader.Entities.Perekhid.Common;
 
 namespace OutOfHome.DataProviders.Boards.Grids.Downloader.Services;
-public class PerekhidHttpService
-{
-    private readonly HttpClient _httpClient;
-    private readonly HttpEngine<GetGridRequest, ResponseContent, ContentParser> _getGridEngine;
+public class PerekhidHttpService : AdvVgHttpService<GetAdvVgGridRequest>
+{    
+    private readonly HttpEngine<GetGridRequest, Entities.AdvVg.Common.ResponseContent, Entities.AdvVg.ContentParser> _getGridEngine;
     public PerekhidHttpService(HttpClient httpClient)
     {
-        _httpClient = httpClient;
-        _getGridEngine = new HttpEngine<GetGridRequest, ResponseContent, ContentParser>(_httpClient);
+        _getGridEngine = new HttpEngine<GetGridRequest, Entities.AdvVg.Common.ResponseContent, Entities.AdvVg.ContentParser>(httpClient);
     }
     public PerekhidHttpService() : this(HttpClientFactory.CreateDefaultHttpClient())
     {
-    }
-    public async Task<ResponseContent> GetGrid(GetGridRequest request) => await _getGridEngine.QueryAsync(request);
+    }    
+    public async Task<Entities.AdvVg.Common.ResponseContent> GetGrid() => await _getGridEngine.QueryAsync(new GetGridRequest());
 }
