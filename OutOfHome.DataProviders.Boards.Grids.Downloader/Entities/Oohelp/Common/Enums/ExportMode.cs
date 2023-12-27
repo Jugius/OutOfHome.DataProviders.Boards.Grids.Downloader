@@ -20,6 +20,12 @@ public enum PerekhidExportMode
     Perekhid = 1
 }
 
+public enum SVOutdoorExportMode
+{
+    None = 0,
+    SVOutdoor = 1
+}
+
 public enum OuthubExportMode
 {
     None = 0, 

@@ -26,6 +26,10 @@ public class GetGridRequest : IRequestPost
     public PerekhidExportMode Perekhid { get; set; }
 
 
+    [JsonPropertyName("svoutdoor")]
+    public SVOutdoorExportMode SVOutdoor { get; set; }
+
+
     [JsonPropertyName("output")]
     public OutputFormat OutputFormat { get; } = OutputFormat.zip;
 
