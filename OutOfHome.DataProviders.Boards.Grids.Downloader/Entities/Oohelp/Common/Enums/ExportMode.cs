@@ -1,36 +1,29 @@
 ﻿namespace OutOfHome.DataProviders.Boards.Grids.Downloader.Entities.Oohelp.Common.Enums;
 public enum BmaExportMode
 {
-    None = 0,
-    Bigmedia = 1, // Только Бигмедиа
-    Partners = 2, // Только партнерка (операторы)
+    Bigmedia = 1,
     BigmediaAndBma = 3,
     BigmediaAndPartners = 4
 }
 
 public enum OctagonExportMode
 {
-    None = 0,
     Octagon = 1
 }
 
 public enum PerekhidExportMode
 {
-    None = 0,
     Perekhid = 1
 }
 
 public enum SVOutdoorExportMode
 {
-    None = 0,
     SVOutdoor = 1
 }
 
 public enum OuthubExportMode
-{
-    None = 0, 
-    Prime = 1, // Только Прайм (переименовать в ПРАЙМ)
-    Outhub = 2, // Прайм + хаб (переименовать в OUTHUB)    
-    PrimeAndOuthub = 3, // Прайм + хаб (Прайм => ПРАЙМ, хаб => OUTHUB)
-    PrimeAndPartners = 4 // Прайм + хаб (Прайм => ПРАЙМ, хаб => восстановить партнерку)
+{    
+    Prime = 1,
+    PrimeAndOuthub = 3,
+    PrimeAndPartners = 4
 }

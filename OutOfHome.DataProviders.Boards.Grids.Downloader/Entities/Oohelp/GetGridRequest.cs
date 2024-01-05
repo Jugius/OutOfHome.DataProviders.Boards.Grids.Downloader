@@ -11,23 +11,23 @@ public class GetGridRequest : IRequestPost
     //private readonly Uri _url = new Uri("https://localhost:7250/api/grids");
 
     [JsonPropertyName("bma")]
-    public BmaExportMode Bma { get; set; }
+    public BmaExportMode? Bma { get; set; }
 
 
     [JsonPropertyName("outhub")]
-    public OuthubExportMode Outhub { get; set; }
+    public OuthubExportMode? Outhub { get; set; }
 
 
     [JsonPropertyName("octagon")]
-    public OctagonExportMode Octagon { get; set; }
+    public OctagonExportMode? Octagon { get; set; }
 
 
     [JsonPropertyName("perekhid")]
-    public PerekhidExportMode Perekhid { get; set; }
+    public PerekhidExportMode? Perekhid { get; set; }
 
 
     [JsonPropertyName("svoutdoor")]
-    public SVOutdoorExportMode SVOutdoor { get; set; }
+    public SVOutdoorExportMode? SVOutdoor { get; set; }
 
 
     [JsonPropertyName("output")]
@@ -36,6 +36,14 @@ public class GetGridRequest : IRequestPost
 
     [JsonPropertyName("remove_duplicates")]
     public bool RemoveDuplicates { get; set; }
+
+
+    [JsonPropertyName("remove_empty_locations")]
+    public bool RemoveEmptyLocations { get; set; }
+
+    
+    [JsonPropertyName("remove_inactive")]
+    public bool RemoveInactiveRecords { get; set; }
 
 
     [JsonPropertyName("key")]
