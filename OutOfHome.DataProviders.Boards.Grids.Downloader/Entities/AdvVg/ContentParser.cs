@@ -21,6 +21,7 @@ public class ContentParser : Interfaces.IContentParser<ResponseContent>
             }
 
             content.Source = await message.Content.ReadAsByteArrayAsync();
+            content.Uri = GetBaseURL(message.RequestMessage.RequestUri?.ToString());
             return content;
         }
         catch (Exceptions.DownloaderException)
@@ -309,4 +310,17 @@ public class ContentParser : Interfaces.IContentParser<ResponseContent>
         { "ЛИС", 11 },
         { "ГРУ", 12 }
     };
+
+    public static string GetBaseURL(string Url)
+    {
+        if (string.IsNullOrEmpty(Url)) return null;
+
+        int inx = Url.IndexOf("://") + "://".Length;
+        int end = Url.IndexOf('/', inx);
+
+        if (end != -1)
+            return Url.Substring(0, end);
+        else
+            return null;
+    }
 }

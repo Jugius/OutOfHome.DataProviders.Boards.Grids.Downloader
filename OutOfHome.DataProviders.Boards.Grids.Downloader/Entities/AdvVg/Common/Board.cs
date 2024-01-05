@@ -65,21 +65,9 @@ public class Board
 
 
     [JsonPropertyName("pr")]
-    public int Price { get; set; }
+    public int Price { get; set; }   
 
 
-    [JsonPropertyName("page")]
-    public string UrlPage { get; set; }
-
-
-    [JsonPropertyName("map")]
-    public string UrlMap { get; set; }
-
-
-    [JsonPropertyName("photo")]
-    public string UrlPhoto { get; set; }
-
-
-    [JsonPropertyName("schema")]
-    public string UrlSchema { get; set; }
+    [JsonPropertyName("photoId")]
+    public string PhotoId { get; set; }
 }

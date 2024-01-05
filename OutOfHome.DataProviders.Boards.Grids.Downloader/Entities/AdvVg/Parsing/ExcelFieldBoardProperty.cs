@@ -1,7 +1,6 @@
 ﻿using OfficeOpenXml;
 using OutOfHome.DataProviders.Boards.Grids.Downloader.Entities.AdvVg.Common;
 using OutOfHome.DataProviders.Boards.Grids.Downloader.Entities.AdvVg.Parsing.Enums;
-using PuppeteerSharp;
 
 namespace OutOfHome.DataProviders.Boards.Grids.Downloader.Entities.AdvVg.Parsing;
 internal class ExcelFieldBoardProperty : ExcelFieldBase
@@ -40,7 +39,7 @@ internal class ExcelFieldBoardProperty : ExcelFieldBase
         {
             case BoardProperty.SupplierCode:
                 destination.SupplierCode = val;
-                destination.UrlPage = GetUriString(source);
+                //destination.UrlPage = GetUriString(source);
                 break;
 
             case BoardProperty.City:
@@ -75,17 +74,26 @@ internal class ExcelFieldBoardProperty : ExcelFieldBase
                 destination.Lighting = BoardIsLightedFactor.Equals(val, StringComparison.OrdinalIgnoreCase) ? LightIsOn : LightIsOff;
                 break;
 
-            case BoardProperty.URL_Map:
-                destination.UrlMap = GetUriString(source);
-                break;
+            //case BoardProperty.URL_Map:
+            //    destination.UrlMap = GetUriString(source);
+            //    break;
 
             case BoardProperty.URLPhoto:
-                destination.UrlPhoto = GetUriString(source);
+                var uri = GetUri(source);
+                if (uri == null) break;
+
+                var photoId = ExtractID(uri.ToString());
+
+                if (photoId.HasValue)
+                {
+                    destination.PhotoId = photoId.Value.ToString("N");
+                }               
+
                 break;
 
-            case BoardProperty.URL_Schema:
-                destination.UrlSchema = GetUriString(source);
-                break;
+            //case BoardProperty.URL_Schema:
+            //    destination.UrlSchema = GetUriString(source);
+            //    break;
 
             case BoardProperty.DoorsId:
                 destination.DoorsDix = source.GetValue<int?>();
@@ -103,10 +111,6 @@ internal class ExcelFieldBoardProperty : ExcelFieldBase
                 destination.Price = source.GetValue<int>();
                 break;
 
-
-            
-            
-            
             default:
                 break;
         }
@@ -118,7 +122,6 @@ internal class ExcelFieldBoardProperty : ExcelFieldBase
 
         if (cell.Hyperlink != null)
             return cell.Hyperlink;
-
 
         if (cell.Value != null)
         {
@@ -142,10 +145,9 @@ internal class ExcelFieldBoardProperty : ExcelFieldBase
         }
         return null;
     }
-    private static string GetUriString(ExcelRange cell)
-    { 
-        var uri = GetUri(cell);
-        if (uri == null) return null;
-        return uri.ToString();
+    private static Guid? ExtractID(string uri)
+    {
+        int end = uri.IndexOf(".jpg");
+        return end >= 32 && Guid.TryParse(uri.AsSpan(end - 32, 32), out Guid result) ? result : null;
     }
 }
