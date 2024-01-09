@@ -7,9 +7,6 @@ using System.Text.Json.Serialization;
 namespace OutOfHome.DataProviders.Boards.Grids.Downloader.Entities.Oohelp;
 public class GetGridRequest : IRequestPost
 {
-    private readonly Uri _url = new Uri("https://boards.oohelp.net/api/grids");
-    //private readonly Uri _url = new Uri("https://localhost:7250/api/grids");
-
     [JsonPropertyName("bma")]
     public BmaExportMode? Bma { get; set; }
 
@@ -56,5 +53,5 @@ public class GetGridRequest : IRequestPost
         return httpContent;
     }
 
-    public Uri GetUri() => _url;
+    public Uri GetUri() => new Uri(OohelpRequestBase.URL);
 }

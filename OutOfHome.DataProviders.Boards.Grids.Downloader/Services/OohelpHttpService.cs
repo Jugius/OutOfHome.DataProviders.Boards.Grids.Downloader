@@ -6,16 +6,27 @@ public class OohelpHttpService
 {
     private readonly HttpClient _httpClient;
     private readonly HttpEngine<GetGridRequest, ResponseContent, ZipContentParser> _getGridEngine;
+    private readonly HttpEngine<GetActualGridsRequest, List<GridInfo>, GetActualGridsContentParser> _getActualGridsEngine;
 
     public OohelpHttpService(HttpClient httpClient)
     {
         _httpClient = httpClient;
         _getGridEngine = new HttpEngine<GetGridRequest, ResponseContent, ZipContentParser>(_httpClient);
+        _getActualGridsEngine = new HttpEngine<GetActualGridsRequest, List<GridInfo>, GetActualGridsContentParser>(_httpClient);
     }
     public OohelpHttpService() : this(HttpClientFactory.CreateDefaultHttpClient())
     {
     }
 
     public async Task<ResponseContent> GetGrid(GetGridRequest request) => await _getGridEngine.QueryAsync(request);
+    public async Task<List<GridInfo>> GetActualGrids(DateOnly? date = null)
+    {
+        var request = new GetActualGridsRequest
+        {
+            GridsDownoadedDate = date
+        };
+
+        return await _getActualGridsEngine.QueryAsync(request);
+    }       
 
 }
