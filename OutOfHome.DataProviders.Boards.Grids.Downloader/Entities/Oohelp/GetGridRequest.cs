@@ -1,5 +1,6 @@
 ﻿using OutOfHome.DataProviders.Boards.Grids.Downloader.Entities.Interfaces;
 using OutOfHome.DataProviders.Boards.Grids.Downloader.Entities.Oohelp.Common.Enums;
+using OutOfHome.DataProviders.Boards.Grids.Downloader.JsonConverters;
 using System.Text;
 using System.Text.Json.Serialization;
 
@@ -29,6 +30,11 @@ public class GetGridRequest : IRequestPost
 
     [JsonPropertyName("output")]
     public OutputFormat OutputFormat { get; } = OutputFormat.zip;
+
+
+    [JsonPropertyName("grids_date")]
+    [JsonConverter(typeof(JsonDateOnlyStringConverter))]
+    public DateOnly? GridsDownloadedDate { get; set; }
 
 
     [JsonPropertyName("remove_duplicates")]
