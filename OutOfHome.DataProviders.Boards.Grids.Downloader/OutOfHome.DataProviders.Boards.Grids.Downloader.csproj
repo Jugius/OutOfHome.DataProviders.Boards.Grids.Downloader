@@ -1,14 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net6.0;net7.0;net8.0</TargetFrameworks>
+    <TargetFrameworks>net7.0;net8.0</TargetFrameworks>
 	<LangVersion>latest</LangVersion>
     <ImplicitUsings>enable</ImplicitUsings>
 	<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <RootNamespace>OutOfHome.DataProviders.Boards.Grids.Downloader</RootNamespace>
     <AssemblyName>OohelpSoft.OutOfHome.DataProviders.Boards.Grids.Downloader</AssemblyName>
 
-	  <Version>1.6.3</Version>
+	  <Version>1.6.4</Version>
 	  <Authors>OoHelp.Net</Authors>
 	  <Company>OoHelp.Net</Company>
 	  <PackageId>$(AssemblyName)</PackageId>
@@ -34,7 +34,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="EPPlus" Version="7.0.5">
+    <PackageReference Include="EPPlus" Version="7.0.7">
       <PrivateAssets>compile</PrivateAssets>
     </PackageReference>
     <PackageReference Include="PuppeteerSharp" Version="13.0.2">
