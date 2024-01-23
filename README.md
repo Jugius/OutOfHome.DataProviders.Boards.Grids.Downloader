@@ -1,3 +1,3 @@
-OutOfHome.DataProviders.Boards.Grids.Downloader
-# Загружаем сетки операторов: Octagon, Outhub, Bigmedia, Perekhid
-# Загружаем сетку агрегатора: OoHelp.net
+# OutOfHome.DataProviders.Boards.Grids.Downloader
+Операторы: Octagon, Outhub, Bigmedia, Perekhid, SV Outdoor
+Агрегаторы: OoHelp.net, Adv.vg
