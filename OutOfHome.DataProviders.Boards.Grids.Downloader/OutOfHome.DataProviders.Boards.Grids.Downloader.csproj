@@ -8,7 +8,7 @@
     <RootNamespace>OutOfHome.DataProviders.Boards.Grids.Downloader</RootNamespace>
     <AssemblyName>OohelpSoft.OutOfHome.DataProviders.Boards.Grids.Downloader</AssemblyName>
 
-	  <Version>1.6.4</Version>
+	  <Version>1.6.5</Version>
 	  <Authors>OoHelp.Net</Authors>
 	  <Company>OoHelp.Net</Company>
 	  <PackageId>$(AssemblyName)</PackageId>
@@ -34,10 +34,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="EPPlus" Version="7.0.7">
+    <PackageReference Include="EPPlus" Version="7.0.9">
       <PrivateAssets>compile</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="PuppeteerSharp" Version="13.0.2">
+    <PackageReference Include="PuppeteerSharp" Version="14.1.0">
 		<PrivateAssets>compile</PrivateAssets>
 	</PackageReference>
   </ItemGroup>
