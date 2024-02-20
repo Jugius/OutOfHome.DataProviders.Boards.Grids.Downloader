@@ -8,17 +8,23 @@ public enum BmaExportMode
 
 public enum OctagonExportMode
 {
-    Octagon = 1
+    Octagon = 1,
+    OctagonByBMA = 2,
+    All = 10
 }
 
 public enum PerekhidExportMode
 {
-    Perekhid = 1
+    Perekhid = 1,
+    PerekhidByBMA = 2,
+    All = 10
 }
 
 public enum SVOutdoorExportMode
 {
-    SVOutdoor = 1
+    SVOutdoor = 1,
+    SVOutdoorByBMA = 2,
+    All = 10
 }
 
 public enum OuthubExportMode
