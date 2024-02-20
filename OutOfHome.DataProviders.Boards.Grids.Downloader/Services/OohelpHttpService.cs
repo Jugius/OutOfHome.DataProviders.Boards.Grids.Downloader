@@ -19,14 +19,6 @@ public class OohelpHttpService
     }
 
     public async Task<ResponseContent> GetGrid(GetGridRequest request) => await _getGridEngine.QueryAsync(request);
-    public async Task<List<GridInfo>> GetActualGrids(DateOnly? date = null)
-    {
-        var request = new GetActualGridsRequest
-        {
-            GridsDownoadedDate = date
-        };
-
-        return await _getActualGridsEngine.QueryAsync(request);
-    }       
+    public async Task<List<GridInfo>> GetActualGrids(GetActualGridsRequest request) => await _getActualGridsEngine.QueryAsync(request);
 
 }
