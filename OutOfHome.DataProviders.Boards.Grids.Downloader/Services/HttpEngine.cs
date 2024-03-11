@@ -5,7 +5,7 @@ namespace OutOfHome.DataProviders.Boards.Grids.Downloader.Services;
 
 internal sealed class HttpEngine<TRequest, TResult, TParser>
     where TRequest : IRequest, new()
-    where TResult : new()
+    where TResult : notnull
     where TParser : IContentParser<TResult>, new()
 {
     private HttpClient httpClient;
