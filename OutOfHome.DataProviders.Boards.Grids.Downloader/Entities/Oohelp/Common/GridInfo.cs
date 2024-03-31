@@ -8,7 +8,7 @@ public class GridInfo
     public Guid Id { get; set; }
 
     [JsonPropertyName("provider")]
-    public string GridProvider { get; set; }
+    public ProviderInfo Provider { get; set; }
 
 
     [JsonPropertyName("downloaded")]
