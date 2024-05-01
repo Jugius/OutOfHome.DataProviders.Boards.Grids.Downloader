@@ -19,7 +19,7 @@ public class Board
 
 
     [JsonPropertyName("city")]
-    public Guid CityId { get; set; }
+    public int CityId { get; set; }
 
 
     [JsonPropertyName("dist")]
