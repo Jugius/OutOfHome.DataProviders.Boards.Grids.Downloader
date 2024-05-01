@@ -7,27 +7,7 @@ using System.Text.Json.Serialization;
 
 namespace OutOfHome.DataProviders.Boards.Grids.Downloader.Entities.Oohelp;
 public class GetGridRequest : IRequestPost
-{
-    [JsonPropertyName("bma")]
-    public BmaExportMode? Bma { get; set; }
-
-
-    [JsonPropertyName("outhub")]
-    public OuthubExportMode? Outhub { get; set; }
-
-
-    [JsonPropertyName("octagon")]
-    public OctagonExportMode? Octagon { get; set; }
-
-
-    [JsonPropertyName("perekhid")]
-    public PerekhidExportMode? Perekhid { get; set; }
-
-
-    [JsonPropertyName("svoutdoor")]
-    public SVOutdoorExportMode? SVOutdoor { get; set; }
-
-
+{ 
     [JsonPropertyName("output")]
     public OutputFormat OutputFormat { get; } = OutputFormat.zip;
 
