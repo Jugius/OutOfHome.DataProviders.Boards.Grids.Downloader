@@ -34,10 +34,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="EPPlus" Version="7.0.9">
+    <PackageReference Include="EPPlus" Version="7.1.2">
       <PrivateAssets>compile</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="PuppeteerSharp" Version="14.1.0">
+    <PackageReference Include="PuppeteerSharp" Version="17.0.0">
 		<PrivateAssets>compile</PrivateAssets>
 	</PackageReference>
   </ItemGroup>
