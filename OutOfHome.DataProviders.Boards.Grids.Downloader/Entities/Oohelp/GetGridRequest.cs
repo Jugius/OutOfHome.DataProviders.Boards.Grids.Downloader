@@ -24,9 +24,17 @@ public class GetGridRequest : IRequestPost
     [JsonPropertyName("remove_empty_locations")]
     public bool RemoveEmptyLocations { get; set; }
 
-    
+
+    [JsonPropertyName("remove_empty_addresses")]
+    public bool RemoveEmptyAddresses { get; set; }
+
+
     [JsonPropertyName("remove_inactive")]
     public bool RemoveInactiveRecords { get; set; }
+
+
+    [JsonPropertyName("remove_zero_price")]
+    public bool RemoveZeroPriceRecords { get; set; }
 
 
     [JsonPropertyName("key")]
