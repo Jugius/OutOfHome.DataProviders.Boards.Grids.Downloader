@@ -10,7 +10,7 @@ public abstract class AdvVgHttpService<TRequest> : IAdvVgHttpEngine where TReque
     
     public static async Task<Cookie> GetInitializedSessionCookie(string uri)
     {
-        using var browserFetcher = new BrowserFetcher();
+        var browserFetcher = new BrowserFetcher();
         await browserFetcher.DownloadAsync();
         await using var browser = await Puppeteer.LaunchAsync(
             new LaunchOptions { Headless = true });
