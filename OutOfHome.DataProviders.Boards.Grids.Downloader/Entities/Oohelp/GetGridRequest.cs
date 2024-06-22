@@ -37,7 +37,7 @@ public class GetGridRequest : IRequestPost
     public bool RemoveZeroPriceRecords { get; set; }
 
 
-    [JsonPropertyName("key")]
+    [JsonIgnore]
     public string Key { get; set; }
 
     public HttpContent GetContent()
@@ -47,5 +47,12 @@ public class GetGridRequest : IRequestPost
         return httpContent;
     }
 
-    public Uri GetUri() => new Uri(OohelpRequestBase.URL);
+    public Uri GetUri()
+    {
+        if(string.IsNullOrEmpty(this.Key))
+            return new Uri(OohelpRequestBase.URL);
+
+        return new Uri(OohelpRequestBase.URL + $"?key={this.Key}");
+    }
+        
 }
