@@ -123,12 +123,20 @@ public class ContentParser : Interfaces.IContentParser<ResponseContent>
                 }
                 else
                 {
-                    newList.Add(current);
+                    if(current.Condition != OccupationConditions.Free)
+                    {
+                        newList.Add(current);
+                    }                    
                     current = occupationPeriods[i];
                 }
             }
         }
-        newList.Add(current);
+
+        if (current.Condition != OccupationConditions.Free)
+        {
+            newList.Add(current);
+        }            
+
         return newList;
     }
 

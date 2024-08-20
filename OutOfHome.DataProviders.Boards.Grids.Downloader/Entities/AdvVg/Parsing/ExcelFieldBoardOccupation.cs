@@ -22,25 +22,18 @@ internal class ExcelFieldBoardOccupation : ExcelFieldBase
     private static int GetCondition(string value)
     {
         if (string.IsNullOrEmpty(value))
-            return 1;
+            return OccupationConditions.Free;
 
         if (_conditions.TryGetValue(value, out int condition))
             return condition;
 
-        return 5;
+        return OccupationConditions.Unrecognized;
     }
 
     private static readonly Dictionary<string, int> _conditions =
         new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase)
         {
-            { "занят", 3 },
-            { "резерв", 2 }
+            { "занят", OccupationConditions.Booked },
+            { "резерв", OccupationConditions.Reserved }
         };
-
-
-    //Free = 1,
-    //Reserved = 2,
-    //Booked = 3,
-    //Unavailable = 4,
-    //Unrecognized = 5,
 }
