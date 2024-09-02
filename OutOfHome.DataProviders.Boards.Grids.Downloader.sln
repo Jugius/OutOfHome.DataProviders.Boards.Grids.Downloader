@@ -9,7 +9,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".tests", ".tests", "{5EF4CB
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Downloader.Test", ".tests\Downloader.Test\Downloader.Test.csproj", "{6905C6F3-26D5-4C57-9A3C-8F99E403CBDF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OohelpGetGridBenchmark", ".tests\OohelpGetGridBenchmark\OohelpGetGridBenchmark.csproj", "{9C9968DF-A6FE-40B0-B57A-49DF158AFE9D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OohelpGetGridBenchmark", ".tests\OohelpGetGridBenchmark\OohelpGetGridBenchmark.csproj", "{9C9968DF-A6FE-40B0-B57A-49DF158AFE9D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{ABA63CC6-50B7-4985-B9C8-DB398B884430}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		GlobalSuppressions.cs = GlobalSuppressions.cs
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

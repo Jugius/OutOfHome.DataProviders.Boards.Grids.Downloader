@@ -7,39 +7,27 @@
 	<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <RootNamespace>OutOfHome.DataProviders.Boards.Grids.Downloader</RootNamespace>
     <AssemblyName>OohelpSoft.OutOfHome.DataProviders.Boards.Grids.Downloader</AssemblyName>
+	<PackageProjectUrl>https://github.com/Jugius/OutOfHome.DataProviders.Boards.Grids.Downloader</PackageProjectUrl>
 
-	  <Version>1.7.9</Version>
-	  <Authors>OoHelp.Net</Authors>
-	  <Company>OoHelp.Net</Company>
-	  <PackageId>$(AssemblyName)</PackageId>
-	  <Copyright>OoHelp.Net</Copyright>
-	  <Description>Библиотека загрузки сеток занятости основных OOH операторов (Украина)</Description>
-	  <PackageLicenseExpression>MIT</PackageLicenseExpression>
-	  <RepositoryUrl>https://github.com/Jugius/OutOfHome.DataProviders.Boards.Grids.Downloader.git</RepositoryUrl>
-	  <RepositoryType>git</RepositoryType>
+	<Version>1.7.9</Version>
+	<Authors>Andrey Sliusarev</Authors>
+	<Company>OoHelp.Net</Company>
+	<PackageId>OohelpSoft.OutOfHome.DataProviders.Boards.Grids.Downloader</PackageId>
+	<Copyright>Andrey Sliusarev</Copyright>
+	<Description>Библиотека загрузки сеток занятости основных OOH операторов (Украина)</Description>
+	<PackageLicenseExpression>MIT</PackageLicenseExpression>	  
+	<RepositoryType>git</RepositoryType>
+	<RepositoryUrl>git://github.com/Jugius/OutOfHome.DataProviders.Boards.Grids.Downloader</RepositoryUrl>
+	<PublishRepositoryUrl>true</PublishRepositoryUrl>
   </PropertyGroup>
 
-  <ItemGroup>
-    <None Remove=".gitattributes" />
-    <None Remove=".gitignore" />
-    <None Remove="README.md" />
-  </ItemGroup>
-
   <ItemGroup>    
-	  <EditorConfigFiles Remove=".editorconfig" />
-  </ItemGroup>
-
-  <ItemGroup>    
-	  <None Include=".editorconfig" />
+	  <None Include="..\README.md" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="EPPlus" Version="7.3.0">
-      <PrivateAssets>compile</PrivateAssets>
-    </PackageReference>
-    <PackageReference Include="PuppeteerSharp" Version="19.0.0">
-		<PrivateAssets>compile</PrivateAssets>
-	</PackageReference>
+    <PackageReference Include="EPPlus" Version="7.3.0" PrivateAssets="Compile" />
+    <PackageReference Include="PuppeteerSharp" Version="19.0.2" PrivateAssets="Compile" />
   </ItemGroup>
 
 </Project>
