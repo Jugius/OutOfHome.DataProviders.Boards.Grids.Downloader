@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net7.0;net8.0;net9.0</TargetFrameworks>
+    <TargetFrameworks>net8.0;net9.0</TargetFrameworks>
 	<LangVersion>latest</LangVersion>
     <ImplicitUsings>enable</ImplicitUsings>
 	<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
@@ -9,7 +9,7 @@
     <AssemblyName>OohelpSoft.OutOfHome.DataProviders.Boards.Grids.Downloader</AssemblyName>
 	<PackageProjectUrl>https://github.com/Jugius/OutOfHome.DataProviders.Boards.Grids.Downloader</PackageProjectUrl>
 
-	<Version>1.7.9</Version>
+	<Version>1.7.10</Version>
 	<Authors>Andrey Sliusarev</Authors>
 	<Company>OoHelp.Net</Company>
 	<PackageId>OohelpSoft.OutOfHome.DataProviders.Boards.Grids.Downloader</PackageId>
@@ -26,7 +26,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="EPPlus" Version="7.5.0" PrivateAssets="Compile" />
+    <PackageReference Include="EPPlus" Version="7.5.2" PrivateAssets="Compile" />
     <PackageReference Include="PuppeteerSharp" Version="20.0.5" PrivateAssets="Compile" />
   </ItemGroup>
 
