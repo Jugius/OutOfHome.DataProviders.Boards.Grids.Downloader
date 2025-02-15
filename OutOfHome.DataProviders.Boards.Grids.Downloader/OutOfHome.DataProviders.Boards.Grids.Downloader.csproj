@@ -21,13 +21,17 @@
 	<PublishRepositoryUrl>true</PublishRepositoryUrl>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Include="..\GlobalSuppressions.cs" Link="GlobalSuppressions.cs" />
+  </ItemGroup>
+
   <ItemGroup>    
 	  <None Include="..\README.md" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="EPPlus" Version="7.5.2" PrivateAssets="Compile" />
-    <PackageReference Include="PuppeteerSharp" Version="20.0.5" PrivateAssets="Compile" />
+    <PackageReference Include="EPPlus" Version="7.6.0" PrivateAssets="Compile" />
+    <PackageReference Include="PuppeteerSharp" Version="20.1.0" PrivateAssets="Compile" />
   </ItemGroup>
 
 </Project>
