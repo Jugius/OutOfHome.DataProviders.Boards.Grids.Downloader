@@ -9,7 +9,7 @@
     <AssemblyName>OohelpSoft.OutOfHome.DataProviders.Boards.Grids.Downloader</AssemblyName>
 	<PackageProjectUrl>https://github.com/Jugius/OutOfHome.DataProviders.Boards.Grids.Downloader</PackageProjectUrl>
 
-	<Version>1.7.10</Version>
+	<Version>1.7.11</Version>
 	<Authors>Andrey Sliusarev</Authors>
 	<Company>OoHelp.Net</Company>
 	<PackageId>OohelpSoft.OutOfHome.DataProviders.Boards.Grids.Downloader</PackageId>
