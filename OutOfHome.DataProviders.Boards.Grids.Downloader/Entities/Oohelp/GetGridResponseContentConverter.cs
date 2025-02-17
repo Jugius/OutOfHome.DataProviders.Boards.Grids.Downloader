@@ -5,7 +5,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace OutOfHome.DataProviders.Boards.Grids.Downloader.Entities.Oohelp;
-internal class ZipContentParser : Interfaces.IResponseConverter<ResponseContent>
+internal class GetGridResponseContentConverter : Interfaces.IResponseConverter<ResponseContent>
 {
     public async Task<ResponseContent> Convert(HttpResponseMessage message)
     {

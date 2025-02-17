@@ -2,7 +2,7 @@
 using System.Text.Json;
 
 namespace OutOfHome.DataProviders.Boards.Grids.Downloader.Entities.Oohelp;
-internal class GetActualGridsContentParser : Interfaces.IResponseConverter<List<GridInfo>>
+internal class GetActualGridsResponseContentConverter : Interfaces.IResponseConverter<List<GridInfo>>
 {
     public async Task<List<GridInfo>> Convert(HttpResponseMessage message)
     {

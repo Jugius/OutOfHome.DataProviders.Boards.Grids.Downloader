@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 using System.Text.Json;
 
 namespace OutOfHome.DataProviders.Boards.Grids.Downloader.Entities.Bigmedia;
-internal class ContentParser : Interfaces.IResponseConverter<List<Board>>
+internal class GetGridResponseContentConverter : Interfaces.IResponseConverter<List<Board>>
 {
     public async Task<List<Board>> Convert(HttpResponseMessage message)
     {
