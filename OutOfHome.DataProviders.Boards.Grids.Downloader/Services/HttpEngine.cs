@@ -8,18 +8,13 @@ internal sealed class HttpEngine<TRequest, TResult, TParser>
     where TResult : notnull
     where TParser : IResponseConverter<TResult>, new()
 {
-    private HttpClient httpClient;
-    public HttpClient HttpClient
-    {
-        get => httpClient ??= HttpClientFactory.CreateDefaultHttpClient();
-        set => httpClient = value;
-    }
+    private readonly HttpClient httpClient;
+    
     public HttpEngine(HttpClient httpClient)
     {
-        HttpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
+        this.httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
     }
-    public HttpEngine() : this(HttpClientFactory.CreateDefaultHttpClient())
-    { }
+    public HttpEngine() : this(HttpClientFactory.CreateDefaultHttpClient()) { }
 
     public async Task<TResult> QueryAsync(TRequest request, CancellationToken cancellationToken = default)
     {
@@ -67,11 +62,11 @@ internal sealed class HttpEngine<TRequest, TResult, TParser>
         {
             using (var content = p.GetContent())
             {
-                return await HttpClient.PostAsync(uri, content, cancellationToken).ConfigureAwait(false);
+                return await httpClient.PostAsync(uri, content, cancellationToken).ConfigureAwait(false);
             }
         }
 
-        return await HttpClient.GetAsync(uri, cancellationToken).ConfigureAwait(false);
+        return await httpClient.GetAsync(uri, cancellationToken).ConfigureAwait(false);
     }
     private async Task<TResult> ProcessResponseAsync(HttpResponseMessage httpResponse)
     {
