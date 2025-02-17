@@ -6,13 +6,13 @@ public class BigmediaHttpService
 {
     private readonly HttpClient _httpClient;
     private readonly HttpEngine<GetGridRequest, List<Board>, ContentParser> _getGridEngine;
-    private readonly HttpEngine<AuthenticateRequest> _authenticateEngine;
+    private readonly HttpEngine<AuthenticateRequest, bool, ResponseToBooleanConverter> _authenticateEngine;
 
     public BigmediaHttpService(HttpClient httpClient)
     {
         _httpClient = httpClient;
         _getGridEngine = new HttpEngine<GetGridRequest, List<Board>, ContentParser>(_httpClient);
-        _authenticateEngine = new HttpEngine<AuthenticateRequest>(_httpClient);
+        _authenticateEngine = new HttpEngine<AuthenticateRequest, bool, ResponseToBooleanConverter>(_httpClient);
     }
     public BigmediaHttpService() : this(HttpClientFactory.CreateDefaultHttpClient())
     {
