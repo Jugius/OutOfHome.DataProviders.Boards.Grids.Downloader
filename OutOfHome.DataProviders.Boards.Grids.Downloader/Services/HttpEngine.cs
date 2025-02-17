@@ -43,7 +43,21 @@ internal sealed class HttpEngine<TRequest, TResult, TParser>
         {
             if (httpMessage.IsSuccessStatusCode)
             {
-                return await httpMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
+                return await httpMessage.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
+            }
+            else
+            {
+                throw new DownloaderException(ErrorCode.HttpError, httpMessage.ReasonPhrase);
+            }
+        }
+    }
+    public async Task<byte[]> GetResponseBytesAsync(TRequest request, CancellationToken cancellationToken = default)
+    {
+        using (HttpResponseMessage httpMessage = await ProcessRequestAsync(request, cancellationToken).ConfigureAwait(false))
+        {
+            if (httpMessage.IsSuccessStatusCode)
+            {
+                return await httpMessage.Content.ReadAsByteArrayAsync(cancellationToken).ConfigureAwait(false);
             }
             else
             {
@@ -53,20 +67,19 @@ internal sealed class HttpEngine<TRequest, TResult, TParser>
     }
     private async Task<HttpResponseMessage> ProcessRequestAsync(TRequest request, CancellationToken cancellationToken = default)
     {
-        if (request == null)
-            throw new ArgumentNullException(nameof(request));
-
-        var uri = request.GetUri();
-
-        if (request is IRequestPost p)
+        try
         {
-            using (var content = p.GetContent())
+            using (var message = BuildRequestMessage(request))
             {
-                return await httpClient.PostAsync(uri, content, cancellationToken).ConfigureAwait(false);
+                return await httpClient.SendAsync(message, cancellationToken).ConfigureAwait(false);
             }
         }
+        catch (Exception ex)
+        {
 
-        return await httpClient.GetAsync(uri, cancellationToken).ConfigureAwait(false);
+            throw;
+        }
+        
     }
     private async Task<TResult> ProcessResponseAsync(HttpResponseMessage httpResponse)
     {
@@ -83,4 +96,14 @@ internal sealed class HttpEngine<TRequest, TResult, TParser>
             }
         }
     }
+    private static HttpRequestMessage BuildRequestMessage(TRequest request)
+    {
+        var uri = request.GetUri();
+        if (request is IRequestPost post)
+        {
+            return new HttpRequestMessage(HttpMethod.Post, uri) { Content = post.GetContent() };
+        }
+        return new HttpRequestMessage(HttpMethod.Get, uri);
+    }
+
 }
