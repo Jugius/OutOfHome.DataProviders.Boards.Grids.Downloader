@@ -3,9 +3,10 @@
 namespace OutOfHome.DataProviders.Boards.Grids.Downloader.Entities.Oohelp;
 public class GetActualGridsRequest : IRequest
 {
+    private const string baseUri = "https://boards.oohelp.net/api/grids";
     public DateOnly? GridsDownoadedDate { get; set; }
     public string Key { get; set; }
-    public Uri GetUri()
+    public virtual Uri GetUri()
     {
         List<string> parameters = new List<string>();
         
@@ -16,8 +17,8 @@ public class GetActualGridsRequest : IRequest
             parameters.Add($"key={this.Key}");
 
         if(parameters.Count == 0)
-            return new Uri(OohelpRequestBase.URL);
+            return new Uri(baseUri);
 
-        return new Uri($"{OohelpRequestBase.URL}?{string.Join('&', parameters)}");        
+        return new Uri($"{baseUri}?{string.Join('&', parameters)}");        
     }
 }

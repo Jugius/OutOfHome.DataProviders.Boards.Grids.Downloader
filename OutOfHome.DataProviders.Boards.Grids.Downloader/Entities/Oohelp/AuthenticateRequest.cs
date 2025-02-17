@@ -5,7 +5,7 @@ using System.Text;
 namespace OutOfHome.DataProviders.Boards.Grids.Downloader.Entities.Oohelp;
 public class AuthenticateRequest : IRequestPost
 {
-    private const string baseUri = "https://localhost:7244/api/user/login";
+    private const string baseUri = "https://users.oohelp.net/api/user/login";
     public string Email { get; set; }
     public string Password { get; set; }
     public HttpContent GetContent()
@@ -20,5 +20,5 @@ public class AuthenticateRequest : IRequestPost
         return new StringContent(json, Encoding.UTF8, "application/json");
     }
 
-    public Uri GetUri() => new Uri(baseUri);
+    public virtual Uri GetUri() => new Uri(baseUri);
 }

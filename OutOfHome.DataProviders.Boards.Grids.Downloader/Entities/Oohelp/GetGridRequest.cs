@@ -7,7 +7,9 @@ using System.Text.Json.Serialization;
 
 namespace OutOfHome.DataProviders.Boards.Grids.Downloader.Entities.Oohelp;
 public class GetGridRequest : IRequestPost
-{ 
+{
+    private const string baseUri = "https://boards.oohelp.net/api/grids";
+
     [JsonPropertyName("output")]
     public OutputFormat OutputFormat { get; } = OutputFormat.zip;
 
@@ -43,16 +45,15 @@ public class GetGridRequest : IRequestPost
     public HttpContent GetContent()
     {
         string json = System.Text.Json.JsonSerializer.Serialize(this);
-        var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
-        return httpContent;
+        return new StringContent(json, Encoding.UTF8, "application/json");
     }
 
     public Uri GetUri()
     {
         if(string.IsNullOrEmpty(this.Key))
-            return new Uri(OohelpRequestBase.URL);
+            return new Uri(baseUri);
 
-        return new Uri(OohelpRequestBase.URL + $"?key={this.Key}");
+        return new Uri(baseUri + $"?key={this.Key}");
     }
         
 }
