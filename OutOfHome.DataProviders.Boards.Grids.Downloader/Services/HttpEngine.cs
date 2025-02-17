@@ -67,17 +67,18 @@ internal sealed class HttpEngine<TRequest, TResult, TParser>
     }
     private async Task<HttpResponseMessage> ProcessRequestAsync(TRequest request, CancellationToken cancellationToken = default)
     {
+        using var message = BuildRequestMessage(request);
         try
         {
             using (var message = BuildRequestMessage(request))
             {
                 return await httpClient.SendAsync(message, cancellationToken).ConfigureAwait(false);
             }
-        }
+        catch (HttpRequestException httpUnavailable)
         catch (Exception ex)
         {
-
-            throw;
+            var m = $"Connection error to '{message.RequestUri}': {httpUnavailable.Message}";
+            throw new DownloaderException(ErrorCode.HttpError, m);
         }
         
     }
