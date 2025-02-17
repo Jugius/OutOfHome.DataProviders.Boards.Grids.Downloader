@@ -4,13 +4,13 @@ using OutOfHome.DataProviders.Boards.Grids.Downloader.Entities.AdvVg.Parsing;
 using OutOfHome.DataProviders.Boards.Grids.Downloader.Entities.AdvVg.Parsing.Enums;
 
 namespace OutOfHome.DataProviders.Boards.Grids.Downloader.Entities.AdvVg;
-public class ContentParser : Interfaces.IContentParser<ResponseContent>
+public class ContentParser : Interfaces.IResponseConverter<ResponseContent>
 {
     public ContentParser()
     {
         ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
     }
-    public async Task<ResponseContent> ParseContent(HttpResponseMessage message)
+    public async Task<ResponseContent> Convert(HttpResponseMessage message)
     {                
         try
         {

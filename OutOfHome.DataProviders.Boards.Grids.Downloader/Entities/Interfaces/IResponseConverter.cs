@@ -1,7 +1,7 @@
 ﻿namespace OutOfHome.DataProviders.Boards.Grids.Downloader.Entities.Interfaces;
 
-internal interface IContentParser<TResult>
+internal interface IResponseConverter<TResult>
     where TResult : notnull
 {
-    Task<TResult> ParseContent(HttpResponseMessage message);
+    Task<TResult> Convert(HttpResponseMessage message);
 }   

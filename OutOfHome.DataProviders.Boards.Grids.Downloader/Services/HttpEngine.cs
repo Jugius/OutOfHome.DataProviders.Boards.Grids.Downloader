@@ -6,7 +6,7 @@ namespace OutOfHome.DataProviders.Boards.Grids.Downloader.Services;
 internal sealed class HttpEngine<TRequest, TResult, TParser>
     where TRequest : IRequest, new()
     where TResult : notnull
-    where TParser : IContentParser<TResult>, new()
+    where TParser : IResponseConverter<TResult>, new()
 {
     private HttpClient httpClient;
     public HttpClient HttpClient
@@ -80,7 +80,7 @@ internal sealed class HttpEngine<TRequest, TResult, TParser>
             if (httpResponse.IsSuccessStatusCode)
             {
                 TParser parser = new TParser();
-                return await parser.ParseContent(httpResponse);
+                return await parser.Convert(httpResponse);
             }
             else
             {

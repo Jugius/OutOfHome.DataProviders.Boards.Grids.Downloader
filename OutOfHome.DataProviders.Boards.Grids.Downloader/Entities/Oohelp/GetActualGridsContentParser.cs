@@ -2,9 +2,9 @@
 using System.Text.Json;
 
 namespace OutOfHome.DataProviders.Boards.Grids.Downloader.Entities.Oohelp;
-internal class GetActualGridsContentParser : Interfaces.IContentParser<List<GridInfo>>
+internal class GetActualGridsContentParser : Interfaces.IResponseConverter<List<GridInfo>>
 {
-    public async Task<List<GridInfo>> ParseContent(HttpResponseMessage message)
+    public async Task<List<GridInfo>> Convert(HttpResponseMessage message)
     {
         await using var stream = await message.Content.ReadAsStreamAsync();
         return await JsonSerializer.DeserializeAsync<List<GridInfo>>(stream);

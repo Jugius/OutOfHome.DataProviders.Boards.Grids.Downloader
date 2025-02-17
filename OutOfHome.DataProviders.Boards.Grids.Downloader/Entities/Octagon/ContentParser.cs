@@ -3,9 +3,9 @@ using System.Xml.Serialization;
 
 namespace OutOfHome.DataProviders.Boards.Grids.Downloader.Entities.Octagon;
 
-internal class ContentParser : Interfaces.IContentParser<ResponseContent>
+internal class ContentParser : Interfaces.IResponseConverter<ResponseContent>
 {
-    public async Task<ResponseContent> ParseContent(HttpResponseMessage message)
+    public async Task<ResponseContent> Convert(HttpResponseMessage message)
     {
         var rawXml = await message.Content.ReadAsStringAsync().ConfigureAwait(false);
 

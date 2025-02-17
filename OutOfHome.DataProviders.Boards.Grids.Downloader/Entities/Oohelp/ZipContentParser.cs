@@ -5,9 +5,9 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace OutOfHome.DataProviders.Boards.Grids.Downloader.Entities.Oohelp;
-internal class ZipContentParser : Interfaces.IContentParser<ResponseContent>
+internal class ZipContentParser : Interfaces.IResponseConverter<ResponseContent>
 {
-    public async Task<ResponseContent> ParseContent(HttpResponseMessage message)
+    public async Task<ResponseContent> Convert(HttpResponseMessage message)
     {
         JsonSerializerOptions jsonOptions = new JsonSerializerOptions
         {
