@@ -18,84 +18,39 @@ internal sealed class HttpEngine<TRequest, TResult, TParser>
 
     public async Task<TResult> QueryAsync(TRequest request, CancellationToken cancellationToken = default)
     {
-        HttpResponseMessage httpMessage;
-
-        try
-        {
-            httpMessage = await ProcessRequestAsync(request, cancellationToken).ConfigureAwait(false);
-        }
-        catch (DownloaderException)
-        {
-            throw;
-        }
-        catch (Exception ex)
-        {
-            throw new DownloaderException(ErrorCode.HttpError, ex.GetBaseException().Message);
-        }
-
-        var response = await ProcessResponseAsync(httpMessage).ConfigureAwait(false);
-
-        return response;
+        using HttpResponseMessage httpMessage = await ProcessRequestAsync(request, cancellationToken).ConfigureAwait(false);
+        await ThrowIfNotSuccessStatusCode(httpMessage);
+        return await ProcessResponseAsync(httpMessage).ConfigureAwait(false);
     }
     public async Task<string> GetResponseStringAsync(TRequest request, CancellationToken cancellationToken = default)
     {
-        using (HttpResponseMessage httpMessage = await ProcessRequestAsync(request, cancellationToken).ConfigureAwait(false))
-        {
-            if (httpMessage.IsSuccessStatusCode)
-            {
-                return await httpMessage.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
-            }
-            else
-            {
-                throw new DownloaderException(ErrorCode.HttpError, httpMessage.ReasonPhrase);
-            }
-        }
+        using HttpResponseMessage httpMessage = await ProcessRequestAsync(request, cancellationToken).ConfigureAwait(false);
+        await ThrowIfNotSuccessStatusCode(httpMessage);
+        return await httpMessage.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
     }
     public async Task<byte[]> GetResponseBytesAsync(TRequest request, CancellationToken cancellationToken = default)
     {
-        using (HttpResponseMessage httpMessage = await ProcessRequestAsync(request, cancellationToken).ConfigureAwait(false))
-        {
-            if (httpMessage.IsSuccessStatusCode)
-            {
-                return await httpMessage.Content.ReadAsByteArrayAsync(cancellationToken).ConfigureAwait(false);
-            }
-            else
-            {
-                throw new DownloaderException(ErrorCode.HttpError, httpMessage.ReasonPhrase);
-            }
-        }
+        using HttpResponseMessage httpMessage = await ProcessRequestAsync(request, cancellationToken).ConfigureAwait(false);
+        await ThrowIfNotSuccessStatusCode(httpMessage);
+        return await httpMessage.Content.ReadAsByteArrayAsync(cancellationToken).ConfigureAwait(false);
     }
     private async Task<HttpResponseMessage> ProcessRequestAsync(TRequest request, CancellationToken cancellationToken = default)
     {
         using var message = BuildRequestMessage(request);
         try
         {
-            using (var message = BuildRequestMessage(request))
-            {
-                return await httpClient.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            }
+            return await httpClient.SendAsync(message, cancellationToken).ConfigureAwait(false);
+        }
         catch (HttpRequestException httpUnavailable)
-        catch (Exception ex)
         {
             var m = $"Connection error to '{message.RequestUri}': {httpUnavailable.Message}";
             throw new DownloaderException(ErrorCode.HttpError, m);
-        }
-        
+        }        
     }
     private async Task<TResult> ProcessResponseAsync(HttpResponseMessage httpResponse)
     {
-        using (httpResponse)
-        {
-            if (httpResponse.IsSuccessStatusCode)
-            {
-                TParser parser = new TParser();
-                return await parser.Convert(httpResponse);
-            }
-            else
-            {
-                throw new DownloaderException(ErrorCode.HttpError, httpResponse.ReasonPhrase);
-            }
-        }
+        TParser parser = new TParser();
+        return await parser.Convert(httpResponse);
     }
     private static HttpRequestMessage BuildRequestMessage(TRequest request)
     {
@@ -105,6 +60,19 @@ internal sealed class HttpEngine<TRequest, TResult, TParser>
             return new HttpRequestMessage(HttpMethod.Post, uri) { Content = post.GetContent() };
         }
         return new HttpRequestMessage(HttpMethod.Get, uri);
+    }
+    private static async Task ThrowIfNotSuccessStatusCode(HttpResponseMessage response)
+    {
+        if (!response.IsSuccessStatusCode)
+        {
+            var message = $"Response error from '{response.RequestMessage.RequestUri}': StatusCode: {response.StatusCode}";            
+
+            var content = await response.Content.ReadAsStringAsync();
+            if (!string.IsNullOrEmpty(content))
+                message += $", Content: {content}";
+
+            throw new DownloaderException(ErrorCode.ServerError, message);
+        }
     }
 
 }
