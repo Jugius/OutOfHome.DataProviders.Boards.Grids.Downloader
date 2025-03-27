@@ -3,6 +3,12 @@
 namespace OutOfHome.DataProviders.Boards.Grids.Downloader.Entities.SpyOutdoor;
 public class GetGridRequest : IRequest
 {
-    private const string uriBase = "https://igrok.spyoutdoor.com";
-    public Uri GetUri() => new Uri(uriBase);
+    private const string uriBase_IGROK = "https://igrok.spyoutdoor.com";
+    
+    public Supplier Supplier { get; set; }
+    public Uri GetUri() => this.Supplier switch
+    {
+        Supplier.Igrok => new Uri(uriBase_IGROK),
+        _ => throw new NotImplementedException($"Base Uri not registered for supplier: {this.Supplier}"),
+    };
 }
