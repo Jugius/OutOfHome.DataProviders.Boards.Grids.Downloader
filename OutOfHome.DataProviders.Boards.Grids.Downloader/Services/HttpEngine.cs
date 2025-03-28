@@ -47,7 +47,7 @@ internal sealed class HttpEngine<TRequest, TResult, TParser>
             throw new DownloaderException(ErrorCode.HttpError, m);
         }        
     }
-    private async Task<TResult> ProcessResponseAsync(HttpResponseMessage httpResponse)
+    private static async Task<TResult> ProcessResponseAsync(HttpResponseMessage httpResponse)
     {
         TParser parser = new TParser();
         return await parser.Convert(httpResponse);
