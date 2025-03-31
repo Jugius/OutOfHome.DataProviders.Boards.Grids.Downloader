@@ -22,6 +22,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+		<InternalsVisibleTo Include="Downloader.Test" />
+	</ItemGroup>
+
+  <ItemGroup>
     <Compile Include="..\GlobalSuppressions.cs" Link="GlobalSuppressions.cs" />
   </ItemGroup>
 
