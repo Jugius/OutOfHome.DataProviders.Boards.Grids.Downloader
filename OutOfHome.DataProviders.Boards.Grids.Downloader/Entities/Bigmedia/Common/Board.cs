@@ -28,10 +28,13 @@ public class Board
     public double? Lat { get; set; }
 
     [JsonPropertyName("grp")]
-    public float? Grp { get; set; }
+    public decimal? Grp { get; set; }
 
     [JsonPropertyName("ots")]
-    public int? Ots { get; set; }
+    public decimal? Ots { get; set; }
+
+    [JsonPropertyName("trp")]
+    public decimal? Trp { get; set; }
 
     //[JsonProperty("doors_no")]
     //[JsonPropertyName("doors_no")]
