@@ -8,7 +8,7 @@ public class ContentParser : Interfaces.IResponseConverter<ResponseContent>
 {
     public ContentParser()
     {
-        ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+        ExcelPackage.License.SetNonCommercialOrganization("OoHelp.Net");
     }
     public async Task<ResponseContent> Convert(HttpResponseMessage message)
     {                
