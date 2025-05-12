@@ -4,7 +4,7 @@ using OutOfHome.DataProviders.Boards.Grids.Downloader.Exceptions;
 namespace OutOfHome.DataProviders.Boards.Grids.Downloader.Services;
 
 internal sealed class HttpEngine<TRequest, TResult, TParser>
-    where TRequest : IRequest, new()
+    where TRequest : IRequest
     where TResult : notnull
     where TParser : IResponseConverter<TResult>, new()
 {

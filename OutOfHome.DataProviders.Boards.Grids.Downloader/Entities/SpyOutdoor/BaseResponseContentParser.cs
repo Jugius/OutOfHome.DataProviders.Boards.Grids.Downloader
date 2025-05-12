@@ -2,7 +2,7 @@
 using System.Text.RegularExpressions;
 
 namespace OutOfHome.DataProviders.Boards.Grids.Downloader.Entities.SpyOutdoor;
-public class ContentParser : Interfaces.IResponseConverter<ResponseContent>
+public class BaseResponseContentParser : Interfaces.IResponseConverter<ResponseContent>
 {
     private const string pattern = @"<script\s+type=""application/json""\s+data-js-react-on-rails-store=""appStore"">(.*?)</script>";
     public async Task<ResponseContent> Convert(HttpResponseMessage message)

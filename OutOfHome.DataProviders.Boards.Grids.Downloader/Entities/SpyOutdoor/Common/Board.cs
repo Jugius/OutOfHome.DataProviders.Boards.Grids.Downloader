@@ -14,10 +14,10 @@ public class Board
     public int ConstructTypeId { get; set; }
 
     [JsonPropertyName("lat")]
-    public double Lat { get; set; }
+    public double? Lat { get; set; }
 
     [JsonPropertyName("lon")]
-    public double Lon { get; set; }
+    public double? Lon { get; set; }
 
     [JsonPropertyName("viewPoint")]
     public string ViewPoint { get; set; }
@@ -41,7 +41,7 @@ public class Board
     public string SchemeHash { get; set; }
 
     [JsonPropertyName("price")]
-    public int Price { get; set; }
+    public int? Price { get; set; }
 
     [JsonPropertyName("address")]
     public string Address { get; set; }

@@ -9,7 +9,7 @@
     <AssemblyName>OohelpSoft.OutOfHome.DataProviders.Boards.Grids.Downloader</AssemblyName>
 	<PackageProjectUrl>https://github.com/Jugius/OutOfHome.DataProviders.Boards.Grids.Downloader</PackageProjectUrl>
 
-	<Version>1.8.0</Version>
+	<Version>1.9.0</Version>
 	<Authors>Andrey Sliusarev</Authors>
 	<Company>OoHelp.Net</Company>
 	<PackageId>OohelpSoft.OutOfHome.DataProviders.Boards.Grids.Downloader</PackageId>
@@ -34,7 +34,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="EPPlus" Version="8.0.1" PrivateAssets="Compile" />
+    <PackageReference Include="EPPlus" Version="8.0.3" PrivateAssets="Compile" />
     <PackageReference Include="PuppeteerSharp" Version="20.1.3" PrivateAssets="Compile" />
   </ItemGroup>
 
