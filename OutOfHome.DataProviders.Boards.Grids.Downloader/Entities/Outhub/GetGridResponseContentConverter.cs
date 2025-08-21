@@ -2,7 +2,7 @@
 
 namespace OutOfHome.DataProviders.Boards.Grids.Downloader.Entities.Outhub;
 
-internal class ContentParser : Interfaces.IResponseConverter<ResponseContent>
+internal class GetGridResponseContentConverter : Interfaces.IResponseConverter<ResponseContent>
 {
     public async Task<ResponseContent> Convert(HttpResponseMessage message)
     { 
