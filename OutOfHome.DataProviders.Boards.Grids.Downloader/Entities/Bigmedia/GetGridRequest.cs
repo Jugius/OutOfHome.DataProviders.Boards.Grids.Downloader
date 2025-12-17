@@ -7,5 +7,6 @@ public class GetGridRequest : IRequest
 {
     private const string baseUri = "https://www.bma.ua/api/v1/data?faces=1";
     public Language Language { get; set; } = Language.Ukrainian;
-    public Uri GetUri() => new Uri($"{baseUri}&locale={this.Language.ToValue()}");
+    public long Timestamp { get; set; } = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+    public Uri GetUri() => new Uri($"{baseUri}&locale={this.Language.ToValue()}&_dc={Timestamp}");
 }
