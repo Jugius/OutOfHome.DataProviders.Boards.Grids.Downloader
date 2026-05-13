@@ -21,20 +21,16 @@
 	<PublishRepositoryUrl>true</PublishRepositoryUrl>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Include="..\..\GlobalSuppressions.cs" Link="GlobalSuppressions.cs" />
+  </ItemGroup>
+
 	<ItemGroup>
 		<InternalsVisibleTo Include="Downloader.Test" />
 	</ItemGroup>
 
   <ItemGroup>
-    <Compile Include="..\GlobalSuppressions.cs" Link="GlobalSuppressions.cs" />
-  </ItemGroup>
-
-  <ItemGroup>    
-	  <None Include="..\README.md" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="PuppeteerSharp" Version="24.40.0" PrivateAssets="Compile" />
+    <PackageReference Include="PuppeteerSharp" Version="24.42.0" PrivateAssets="Compile" />
   </ItemGroup>
 
 </Project>
