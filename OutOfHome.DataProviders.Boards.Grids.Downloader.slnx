@@ -7,4 +7,7 @@
   <Folder Name="/src/">
     <Project Path="src/OutOfHome.DataProviders.Boards.Grids.Downloader/OutOfHome.DataProviders.Boards.Grids.Downloader.csproj" />
   </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/Grids.Downloader.Tests/Grids.Downloader.Tests.csproj" Id="dc4e05b8-2c10-4ada-af28-976f28ea02fc" />
+  </Folder>
 </Solution>
