@@ -2,7 +2,7 @@
 using System.Net;
 
 namespace OutOfHome.DataProviders.Boards.Grids.Downloader.Services;
-public abstract class AdvVgHttpService<TRequest> : IAdvVgHttpEngine where TRequest : Entities.AdvVg.GetGridRequest, new()
+internal class AdvVgHttpService<TRequest> where TRequest : Entities.AdvVg.GetGridRequest, new()
 {
     private const string SessionIdCookieName = "PHPSESSID";
 
@@ -38,7 +38,7 @@ public abstract class AdvVgHttpService<TRequest> : IAdvVgHttpEngine where TReque
         var client = HttpClientFactory.CreateDefaultHttpClient(handler);
         return new HttpEngine<TRequest, Entities.AdvVg.Common.ResponseContent, Entities.AdvVg.ContentParser>(client);
     }
-    public async Task<Entities.AdvVg.Common.ResponseContent> GetAdvVgGrid()
+    public async Task<Entities.AdvVg.Common.ResponseContent> GetGrid()
     {
         TRequest request = new TRequest();
         _getAdvVgGridEngine ??= await CreateHttpEngine(request.BaseUri);

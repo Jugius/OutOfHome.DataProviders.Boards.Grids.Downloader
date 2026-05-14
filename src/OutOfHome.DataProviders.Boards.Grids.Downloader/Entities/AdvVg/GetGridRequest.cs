@@ -1,7 +1,7 @@
 ﻿using OutOfHome.DataProviders.Boards.Grids.Downloader.Entities.Interfaces;
 
 namespace OutOfHome.DataProviders.Boards.Grids.Downloader.Entities.AdvVg;
-public abstract class GetGridRequest : IRequest
+internal abstract class GetGridRequest : IRequest
 {
     //private const string encodedArguments = @"/$/boards:partner/grid-export?ex[x5]=0&ex[useorder]=1&ex[flds][]=oid&ex[flds][]=cyt&ex[flds][]=dis&ex[flds][]=adr&ex[flds][]=zon&ex[flds][]=inf&ex[flds][]=c&ex[flds][]=f&ex[flds][]=s&ex[flds][]=l&ex[flds][]=rid_doors&ex[flds][]=ots&ex[flds][]=grp&ex[flds][]=prc&ex[flds][]=occ&ex[flds][]=purl&ex[flds][]=surl&ex[flds][]=mapurl";
 
