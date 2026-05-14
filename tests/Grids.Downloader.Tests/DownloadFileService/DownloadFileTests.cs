@@ -90,4 +90,21 @@ public class DownloadFileTests(ITestOutputHelper output) : TestBase(output)
         string path = Path.Combine(folder, file.FileName);
         await File.WriteAllBytesAsync(path, file.Data, TestContext.Current.CancellationToken);        
     }
+    [Fact]
+    public async Task Perekhid()
+    {
+        const string Provider = "Perekhid";
+        var query = Entities.Common.DownloadFileRequest.Perekhid;
+
+        var file = await downloadFileService.DownloadFile(query);
+        Assert.NotNull(file);
+        Assert.NotNull(file.Data);
+
+        Log(file.FileName);
+        Log(file.FileType.ToString());
+
+        var folder = GetFilesFolder(Provider);
+        string path = Path.Combine(folder, file.FileName);
+        await File.WriteAllBytesAsync(path, file.Data, TestContext.Current.CancellationToken);
+    }
 }
