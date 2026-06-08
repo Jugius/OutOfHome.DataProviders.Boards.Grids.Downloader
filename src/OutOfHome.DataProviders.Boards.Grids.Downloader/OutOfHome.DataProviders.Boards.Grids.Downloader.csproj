@@ -4,6 +4,7 @@
     <TargetFramework>net10.0</TargetFramework>
 	<LangVersion>default</LangVersion>
     <ImplicitUsings>enable</ImplicitUsings>
+	<Nullable>enable</Nullable>
 	<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <RootNamespace>OutOfHome.DataProviders.Boards.Grids.Downloader</RootNamespace>
     <AssemblyName>OohelpSoft.OutOfHome.DataProviders.Boards.Grids.Downloader</AssemblyName>
@@ -30,7 +31,7 @@
 	</ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="PuppeteerSharp" Version="24.42.0" PrivateAssets="Compile" />
+    <PackageReference Include="PuppeteerSharp" Version="25.1.0" PrivateAssets="Compile" />
   </ItemGroup>
 
 </Project>
