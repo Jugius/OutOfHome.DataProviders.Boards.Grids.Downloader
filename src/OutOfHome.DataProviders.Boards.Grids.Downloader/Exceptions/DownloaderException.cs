@@ -2,8 +2,12 @@
 public class DownloaderException : Exception
 {
     public ErrorCode ErrorCode { get; }
-    public DownloaderException(ErrorCode code, string message) : base(message)
+    private DownloaderException(ErrorCode code, string message) : base(message)
     {
         this.ErrorCode = code;
     }
+    public static DownloaderException ContentParsingError(string message) => new DownloaderException(ErrorCode.ContentParsingError, message);
+    public static DownloaderException HttpError(string message) => new DownloaderException(ErrorCode.HttpError, message);
+    public static DownloaderException InvalidRequest(string message) => new DownloaderException(ErrorCode.InvalidRequest, message);
+    public static DownloaderException ServerError(string message) => new DownloaderException(ErrorCode.ServerError, message);
 }

@@ -16,7 +16,7 @@ internal class GetGridResponseContentConverter : Interfaces.IResponseConverter<L
         }
 
         if (boards.Count == 0)
-            throw new Exceptions.DownloaderException(Exceptions.ErrorCode.ServerError, $"Cервер вернул 0 записей.");
+            throw Exceptions.DownloaderException.ServerError("Cервер вернул 0 записей.");
 
         foreach (var brd in boards)
         {
@@ -25,7 +25,7 @@ internal class GetGridResponseContentConverter : Interfaces.IResponseConverter<L
         }
         return boards;
     }
-    private static string NormalizeUri(string uri)
+    private static string? NormalizeUri(string uri)
     {
         if (string.IsNullOrEmpty(uri))
             return null;

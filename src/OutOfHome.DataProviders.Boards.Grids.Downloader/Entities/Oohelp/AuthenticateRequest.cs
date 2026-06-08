@@ -11,10 +11,10 @@ public class AuthenticateRequest : IRequestPost
     public HttpContent GetContent()
     {
         if (string.IsNullOrEmpty(Email))
-            throw new DownloaderException(ErrorCode.InvalidRequest, "Empty Email");
+            throw DownloaderException.InvalidRequest("Empty Email");
 
         if (string.IsNullOrEmpty(Password))
-            throw new DownloaderException(ErrorCode.InvalidRequest, "Empty Password");
+            throw DownloaderException.InvalidRequest("Empty Password");
 
         string json = System.Text.Json.JsonSerializer.Serialize(this);
         return new StringContent(json, Encoding.UTF8, "application/json");

@@ -44,7 +44,7 @@ internal sealed class HttpEngine<TRequest, TResult, TParser>
         catch (HttpRequestException httpUnavailable)
         {
             var m = $"Connection error to '{message.RequestUri}': {httpUnavailable.Message}";
-            throw new DownloaderException(ErrorCode.HttpError, m);
+            throw DownloaderException.HttpError(m);
         }        
     }
     private static async Task<TResult> ProcessResponseAsync(HttpResponseMessage httpResponse)
@@ -71,7 +71,7 @@ internal sealed class HttpEngine<TRequest, TResult, TParser>
             if (!string.IsNullOrEmpty(content))
                 message += $", Content: {content}";
 
-            throw new DownloaderException(ErrorCode.ServerError, message);
+            throw DownloaderException.ServerError(message);
         }
     }
 

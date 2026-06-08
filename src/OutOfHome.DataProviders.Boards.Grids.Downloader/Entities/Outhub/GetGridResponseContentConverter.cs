@@ -7,8 +7,8 @@ internal class GetGridResponseContentConverter : Interfaces.IResponseConverter<R
     public async Task<ResponseContent> Convert(HttpResponseMessage message)
     { 
         var content = await System.Text.Json.JsonSerializer.DeserializeAsync<ResponseContent>(await message.Content.ReadAsStreamAsync());
-        if (content.ServerStatus < 0)
-            throw new Exceptions.DownloaderException(Exceptions.ErrorCode.ServerError, $"Cервер вернул статус: {content.ServerStatus}");
+        if (content!.ServerStatus < 0)
+            throw Exceptions.DownloaderException.ServerError($"Cервер вернул статус: {content.ServerStatus}");
         return content;
     }
         
