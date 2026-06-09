@@ -10,7 +10,7 @@ public class DownloadFileTests(ITestOutputHelper output) : TestBase(output)
         const string Provider = "Megaboard";
         var query = Entities.Common.DownloadFileRequest.Megaboard;
 
-        var file = await downloadFileService.DownloadFile(query);
+        var file = await downloadFileService.DownloadFile(query, TestContext.Current.CancellationToken);
         Assert.NotNull(file);
         Assert.NotNull(file.Data);
 
@@ -28,7 +28,7 @@ public class DownloadFileTests(ITestOutputHelper output) : TestBase(output)
         const string Provider = "Ollan";
         var query = Entities.Common.DownloadFileRequest.Ollan;
 
-        var file = await downloadFileService.DownloadFile(query);
+        var file = await downloadFileService.DownloadFile(query, TestContext.Current.CancellationToken);
         Assert.NotNull(file);
         Assert.NotNull(file.Data);
 
@@ -45,7 +45,7 @@ public class DownloadFileTests(ITestOutputHelper output) : TestBase(output)
         const string Provider = "PozitivBC";
         var query = Entities.Common.DownloadFileRequest.PozitivBC;
 
-        var file = await downloadFileService.DownloadFile(query);
+        var file = await downloadFileService.DownloadFile(query, TestContext.Current.CancellationToken);
         Assert.NotNull(file);
         Assert.NotNull(file.Data);
 
@@ -62,7 +62,7 @@ public class DownloadFileTests(ITestOutputHelper output) : TestBase(output)
         const string Provider = "RoyalTrend";
         var query = Entities.Common.DownloadFileRequest.RoyalTrend;
 
-        var file = await downloadFileService.DownloadFile(query);
+        var file = await downloadFileService.DownloadFile(query, TestContext.Current.CancellationToken);
         Assert.NotNull(file);
         Assert.NotNull(file.Data);
 
@@ -79,7 +79,7 @@ public class DownloadFileTests(ITestOutputHelper output) : TestBase(output)
         const string Provider = "Kent";
         var query = Entities.Common.DownloadFileRequest.Kent;
 
-        var file = await downloadFileService.DownloadFile(query);
+        var file = await downloadFileService.DownloadFile(query, TestContext.Current.CancellationToken);
         Assert.NotNull(file);
         Assert.NotNull(file.Data);
 
@@ -96,7 +96,7 @@ public class DownloadFileTests(ITestOutputHelper output) : TestBase(output)
         const string Provider = "Perekhid";
         var query = Entities.Common.DownloadFileRequest.Perekhid;
 
-        var file = await downloadFileService.DownloadFile(query);
+        var file = await downloadFileService.DownloadFile(query, TestContext.Current.CancellationToken);
         Assert.NotNull(file);
         Assert.NotNull(file.Data);
 
@@ -113,7 +113,7 @@ public class DownloadFileTests(ITestOutputHelper output) : TestBase(output)
         const string Provider = "SVOutdoor";
         var query = Entities.Common.DownloadFileRequest.SVOutdoor;
 
-        var file = await downloadFileService.DownloadFile(query);
+        var file = await downloadFileService.DownloadFile(query, TestContext.Current.CancellationToken);
         Assert.NotNull(file);
         Assert.NotNull(file.Data);
 
