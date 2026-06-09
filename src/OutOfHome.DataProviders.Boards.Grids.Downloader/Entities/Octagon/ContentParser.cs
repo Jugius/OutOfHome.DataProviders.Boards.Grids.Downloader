@@ -1,20 +1,26 @@
-﻿using OutOfHome.DataProviders.Boards.Grids.Downloader.Entities.Octagon.Common;
-using System.Xml.Serialization;
+﻿using OutOfHome.DataProviders.Boards.Grids.Downloader.Entities.Interfaces;
+using OutOfHome.DataProviders.Boards.Grids.Downloader.Entities.Octagon.Common;
+using OutOfHome.DataProviders.Boards.Grids.Downloader.Exceptions;
 
 namespace OutOfHome.DataProviders.Boards.Grids.Downloader.Entities.Octagon;
 
-internal class ContentParser : Interfaces.IResponseConverter<ResponseContent>
+internal class ContentParser : IResponseConverter<OctagonBoard[]>
 {
-    public async Task<ResponseContent> Convert(HttpResponseMessage message)
+    public async Task<OctagonBoard[]> Convert(HttpResponseMessage message)
     {
-        var rawXml = await message.Content.ReadAsStringAsync().ConfigureAwait(false);
+        var rowStr = await message.Content.ReadAsStringAsync();
+        if (string.IsNullOrEmpty(rowStr))
+            throw DownloaderException.ServerError("Сервер вернул нулевой результат.");
 
-        if (string.IsNullOrEmpty(rawXml))
-            throw new Exceptions.DownloaderException(Exceptions.ErrorCode.ServerError, "Сервер вернул нулевой результат.");
+        try
+		{
+            var boards = System.Text.Json.JsonSerializer.Deserialize<OctagonBoard[]>(rowStr);
+            return boards is null ? throw DownloaderException.ServerError("Сервер вернул нулевой результат.") : boards;
+        }
+        catch (Exception ex)
+		{
+            throw DownloaderException.ContentParsingError("Ошибка десериализации OctagonBoard[]", ex);
+		}
 
-        XmlSerializer formatter = new XmlSerializer(typeof(ResponseContent));
-
-        ResponseContent response = (ResponseContent)formatter.Deserialize(new StringReader(rawXml));
-        return response;
-    }        
+    }
 }

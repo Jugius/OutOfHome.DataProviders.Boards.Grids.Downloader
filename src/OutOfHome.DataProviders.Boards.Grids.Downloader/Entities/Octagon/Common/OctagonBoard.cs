@@ -1,111 +1,39 @@
-﻿using System.Globalization;
-using System.Xml.Serialization;
+﻿using System.Text.Json.Serialization;
 
 namespace OutOfHome.DataProviders.Boards.Grids.Downloader.Entities.Octagon.Common;
 
-[Serializable()]
-[System.ComponentModel.DesignerCategory("code")]
-[XmlType(AnonymousType = true)]
-public class OctagonBoard
+public sealed class OctagonBoard
 {
-    private static readonly NumberFormatInfo parsePointFormatter = new NumberFormatInfo { NumberDecimalSeparator = "." };
-    private const NumberStyles parseStyle = NumberStyles.AllowDecimalPoint;
+    [JsonPropertyName("hashId")] public string HashId { get; set; } = null!;
+    [JsonPropertyName("Id")] public string Id { get; set; } = null!;
+    [JsonPropertyName("mediaFormatId")] public string FormatId { get; set; } = null!;
+    [JsonPropertyName("mediaFormatName")] public string FormatName { get; set; } = null!;
+    [JsonPropertyName("mediaCategoryId")] public Guid CategoryId { get; set; }
+    [JsonPropertyName("mediaCategoryName")] public string CategoryName { get; set; } = null!;
+    [JsonPropertyName("actorId")] public string ActorId { get; set; } = null!;
+    [JsonPropertyName("actorName")] public string ActorName { get; set; } = null!;
+    [JsonPropertyName("actorCode")] public string? ActorCode { get; set; }
+    [JsonPropertyName("geoCityId")] public string CityId { get; set; } = null!;
+    [JsonPropertyName("geoCityName")] public string CityName { get; set; } = null!;
+    [JsonPropertyName("geoRegionId")] public string RegionId { get; set; } = null!;
+    [JsonPropertyName("geoRegionName")] public string RegionName { get; set; } = null!;
+    [JsonPropertyName("geoLatitude")] public double Latitude { get; set; }
+    [JsonPropertyName("geoLongitude")] public double Longitude { get; set; }
+    [JsonPropertyName("geoBearing")] public short? Bearing { get; set; }
+    [JsonPropertyName("geoAddress")] public string Address { get; set; } = null!;
+    [JsonPropertyName("constructionCode")] public string ConstructionCode { get; set; } = null!;
+    [JsonPropertyName("shortCode")] public string ShortCode { get; set; } = null!;
+    [JsonPropertyName("facade")] public string Side { get; set; } = null!;
+    [JsonPropertyName("cost")] public int Price { get; set; }
+    [JsonPropertyName("price2")] public int Price2 { get; set; }
+    [JsonPropertyName("grp")] public float Grp { get; set; }
+    [JsonPropertyName("ots")] public float Ots { get; set; }
+    [JsonPropertyName("isReady")] public bool IsReady { get; set; }
+    [JsonPropertyName("isIlluminated")] public bool IsIlluminated { get; set; }
+    [JsonPropertyName("isAssigned")] public bool IsAssigned { get; set; }
+    [JsonPropertyName("isDigit")] public bool IsDigit { get; set; }
+    [JsonPropertyName("occupancies")] public Occupancy[] Occupancies { get; set; } = [];
 
-    [XmlAttribute(AttributeName = "FaceNumber")]
-    public string SupplierCode { get; set; }
-
-    [XmlAttribute(AttributeName = "SiteAddress")]
-    public string Street { get; set; }
-
-    [XmlAttribute(AttributeName = "CityId")]
-    public string CityId { get; set; }
-
-    [XmlAttribute(AttributeName = "MediaTypeName")]
-    public string TypeSizeName { get; set; }
-
-    [XmlAttribute(AttributeName = "Face")]
-    public string Side { get; set; }
-
-    [XmlAttribute(AttributeName = "Illuminated")]
-    public byte Lighting { get; set; }
-
-    [XmlAttribute(AttributeName = "Price")]
-    public float Price { get; set; }
-
-    [XmlAttribute(AttributeName = "Latitude")]
-    public double Latitude { get; set; }
-
-    [XmlAttribute(AttributeName = "Longitude")]
-    public double Longitude { get; set; }
-
-    [XmlAttribute(AttributeName = "Direction")]
-    public short Direction { get; set; }
-
-
-    [XmlAttribute(AttributeName = "PeriodFrom", DataType = "date")]
-    public DateTime PeriodFrom { get; set; }
-
-    [XmlAttribute(AttributeName = "PeriodTo", DataType = "date")]
-    public DateTime PeriodTo { get; set; }
-
-    [XmlAttribute(AttributeName = "FaceStatus")]
-    public byte OccupationStatus { get; set; }
-
-
-    [XmlAttribute(AttributeName = "EsparCode")]
-    public string DoorsDix { get; set; }
-
-    [XmlAttribute(AttributeName = "GRP")]
-    public float Grp { get; set; }
-
-    [XmlAttribute(AttributeName = "OTS")]
-    public float Ots { get; set; }
-
-
-
-    //[XmlAttribute(AttributeName = "MediaTypeId")]
-    //[JsonProperty("typesizeId")]
-    //public string TypeSizeId { get; set; }
-
-    //[System.Xml.Serialization.XmlAttribute()]
-    //public string Oid { get; set; }
-
-    //[System.Xml.Serialization.XmlAttribute()]
-    //public string SiteId { get; set; }
-
-    //[System.Xml.Serialization.XmlAttribute()]
-    //public string SiteNumber { get; set; }
-
-    //[System.Xml.Serialization.XmlAttribute()]
-    //public string MediaTypeId { get; set; }
-
-    //[System.Xml.Serialization.XmlAttribute()]
-    //public string PrimaryImageId { get; set; }
-
-    //[System.Xml.Serialization.XmlAttribute()]
-    //public string ProductId { get; set; }
-
-    //[System.Xml.Serialization.XmlAttribute()]
-    //public string ProductName { get; set; }
-
-    //[System.Xml.Serialization.XmlAttribute()]
-    //public string SiteMediaTypeIds { get; set; }
-
-    //[System.Xml.Serialization.XmlAttribute()]
-    //public string SiteFaceIds { get; set; }
-
-    //[System.Xml.Serialization.XmlAttribute()]
-    //public string SiteFaces { get; set; }
-
-    //[System.Xml.Serialization.XmlAttribute()]
-    //public string SiteDirections { get; set; }        
-
-    //[System.Xml.Serialization.XmlAttribute()]
-    //public string BasketRecordId { get; set; }
-
-    //[System.Xml.Serialization.XmlAttribute()]
-    //public byte Selected { get; set; }        
-
-    //[XmlAttribute(AttributeName = "CityName")]
-    //public string cityStr { get; set; }
+    // [JsonPropertyName("occupancySummaryStatus")] public int OccupancySummaryStatus { get; set; }
+    // [JsonPropertyName("favorite")] public object favorite { get; set; }
 }

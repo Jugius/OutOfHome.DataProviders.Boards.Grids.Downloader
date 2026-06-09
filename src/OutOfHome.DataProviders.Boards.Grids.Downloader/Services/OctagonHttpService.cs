@@ -5,15 +5,15 @@ namespace OutOfHome.DataProviders.Boards.Grids.Downloader.Services;
 public class OctagonHttpService
 {
     private readonly HttpClient _httpClient;
-    private readonly HttpEngine<GetGridRequest, ResponseContent, ContentParser> _getGridEngine;
+    private readonly HttpEngine<GetGridRequest, OctagonBoard[], ContentParser> _getGridEngine;
     public OctagonHttpService(HttpClient httpClient)
     {
         _httpClient = httpClient;
-        _getGridEngine = new HttpEngine<GetGridRequest, ResponseContent, ContentParser>(_httpClient);
+        _getGridEngine = new HttpEngine<GetGridRequest, OctagonBoard[], ContentParser>(_httpClient);
     }
     public OctagonHttpService() : this(HttpClientFactory.CreateDefaultHttpClient())
     {
     }
-    public async Task<ResponseContent> GetGrid(GetGridRequest request) => await _getGridEngine.QueryAsync(request);
-    public async Task<string> GetResponseStringAsync(GetGridRequest request) => await _getGridEngine.GetResponseStringAsync(request);
+    public async Task<OctagonBoard[]> GetGrid() => await _getGridEngine.QueryAsync(new GetGridRequest());
+    public async Task<string> GetResponseStringAsync() => await _getGridEngine.GetResponseStringAsync(new GetGridRequest());
 }
