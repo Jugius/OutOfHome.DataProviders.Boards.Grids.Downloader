@@ -8,7 +8,7 @@ public class Board
     public int BoardId { get; set; }
 
     [JsonPropertyName("townId")]
-    public int? TownId { get; set; }
+    public int TownId { get; set; }
 
     [JsonPropertyName("constructTypeId")]
     public int ConstructTypeId { get; set; }
@@ -20,7 +20,7 @@ public class Board
     public double? Lon { get; set; }
 
     [JsonPropertyName("viewPoint")]
-    public string ViewPoint { get; set; }
+    public string? ViewPoint { get; set; }
 
     [JsonPropertyName("states")]
     public List<string> States { get; set; }
