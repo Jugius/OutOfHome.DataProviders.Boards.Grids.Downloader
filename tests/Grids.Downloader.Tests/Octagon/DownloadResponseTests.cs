@@ -61,6 +61,6 @@ public class DownloadResponseTests(ITestOutputHelper output) : TestBase(output)
 
         Log($"Boards count: {boards.Length}");
 
-        Assert.All(boards.SelectMany(b => b.Occupancies), o => Assert.True(o.Status is 1 or 2 or 3));
+        Assert.All(boards.SelectMany(b => b.Occupancies), o => Assert.True(o.Status is OccupancyStatus.Booked or OccupancyStatus.Reserved or OccupancyStatus.Free));
     }
 }
