@@ -11,7 +11,7 @@ public class AgencyProfile
     public int RegionId { get; set; }
 
     [JsonPropertyName("townId")]
-    public int TownId { get; set; }
+    public int? TownId { get; set; }
 
     [JsonPropertyName("operatorId")]
     public object OperatorId { get; set; }

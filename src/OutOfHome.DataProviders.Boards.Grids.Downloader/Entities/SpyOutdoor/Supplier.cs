@@ -4,4 +4,5 @@ public enum Supplier
 {
     Igrok,
     Brok,
+    Unicom
 }

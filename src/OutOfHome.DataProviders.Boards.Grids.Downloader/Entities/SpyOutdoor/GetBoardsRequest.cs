@@ -7,6 +7,7 @@ public class GetBoardsRequest : IRequest
 
     private const string uriBase_IGROK = "https://igrok.spyoutdoor.com";
     private const string uriBase_BROK = "https://brok.spyoutdoor.com";
+    private const string uriBase_UNICOM = "https://unicom.spyoutdoor.com";
 
     private readonly Supplier supplier;
     private readonly int townId;
@@ -27,6 +28,7 @@ public class GetBoardsRequest : IRequest
         {
             Supplier.Igrok => uriBase_IGROK,
             Supplier.Brok => uriBase_BROK,
+            Supplier.Unicom => uriBase_UNICOM,
             _ => throw new NotImplementedException($"Base Uri not registered for supplier: {this.supplier}"),
         };
 
