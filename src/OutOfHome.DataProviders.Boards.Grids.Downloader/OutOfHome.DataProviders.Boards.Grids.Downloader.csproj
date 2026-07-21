@@ -27,7 +27,7 @@
   </ItemGroup>
 
 	<ItemGroup>
-		<InternalsVisibleTo Include="Downloader.Test" />
+		<InternalsVisibleTo Include="Grids.Downloader.Tests" />
 	</ItemGroup>
 
   <ItemGroup>
