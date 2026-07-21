@@ -5,68 +5,64 @@ using System.Net;
 
 namespace OutOfHome.DataProviders.Boards.Grids.Downloader.Services;
 
-public class OuthubHttpService
+public class OuthubHttpService(HttpClient httpClient, IChromiumInitializer chromiumInitializer)
 {
-    private readonly HttpClientHandler _httpClientHandler;
-    private readonly HttpClient _httpClient;
-    private readonly HttpEngine<GetGridRequest, ResponseContent, GetGridResponseContentConverter> _getGridEngine;
+    private readonly HttpEngine<GetGridRequest, ResponseContent, GetGridResponseContentConverter> _getGridEngine =
+        new HttpEngine<GetGridRequest, ResponseContent, GetGridResponseContentConverter>(httpClient);
 
-    public OuthubHttpService(HttpClient httpClient)
-    {        
-        _httpClient = httpClient;
-        _getGridEngine = new HttpEngine<GetGridRequest, ResponseContent, GetGridResponseContentConverter>(_httpClient);
-    }
-    public OuthubHttpService()
+    public async Task<ResponseContent> GetGrid(NetworkCredential? credentials = null)
     {
-        _httpClientHandler = HttpClientFactory.GetDefaultHttpClientHandler();
-        _httpClient = HttpClientFactory.CreateDefaultHttpClient(_httpClientHandler);
-        _getGridEngine = new HttpEngine<GetGridRequest, ResponseContent, GetGridResponseContentConverter>(_httpClient);
-    }
-    public async Task<ResponseContent> GetGrid(GetGridRequest request) => await _getGridEngine.QueryAsync(request);
-    public async Task<bool> Authenticate(AuthenticateRequest request) 
-    {
-        if (_httpClientHandler == null) return false;
-
-        var cookies = await GetLoginCookies(request).ConfigureAwait(false);        
-
-        if (cookies.Count == 0 || !cookies.Any(a => a.Name == ".mainauth"))
+        var getGrid = new GetGridRequest();
+        if (credentials != null)
         {
-            return false;
+            var cookies = await GetLoginCookies(credentials).ConfigureAwait(false);
+            getGrid.Cookies.AddRange(cookies);
         }
+        return await _getGridEngine.QueryAsync(getGrid);
 
-        foreach (var cookie in cookies)
-        {
-            _httpClientHandler.CookieContainer.Add(cookie);
-        }
-
-        return true;
     }
-
-    private static async Task<List<Cookie>> GetLoginCookies(AuthenticateRequest request)
+    public async Task<List<Cookie>> GetLoginCookies(NetworkCredential? credentials)
     {
-        await new BrowserFetcher().DownloadAsync();        
-        using var browser = await Puppeteer.LaunchAsync(new LaunchOptions
+        const string uri = "https://booking.outhub.online/Account/LogOn";
+        if (credentials is null) return [];
+
+        await using var pageContext = await chromiumInitializer.CreatePageAsync();
+        var page = pageContext.Page;
+
+        await page.GoToAsync(uri, new NavigationOptions
         {
-            Headless = true 
+            WaitUntil = new[] { WaitUntilNavigation.DOMContentLoaded }
         });
-        await using var page = await browser.NewPageAsync();
-        await page.GoToAsync(request.Uri);
 
-        await page.TypeAsync("#UserName", request.UserName);
-        await page.TypeAsync("#Password", request.Password);
-        await page.ClickAsync("input[type=submit]");
-        await page.WaitForNavigationAsync();
+        await page.TypeAsync("#UserName", credentials.UserName);
+        await page.TypeAsync("#Password", credentials.Password);
+
+        await Task.WhenAll(
+            page.WaitForNavigationAsync(new NavigationOptions { Timeout = 15000 }),
+            page.ClickAsync("input[type=submit]"));
+
 
         var cookies = await page.GetCookiesAsync();
+
+        if (cookies == null || cookies.Length == 0 || !cookies.Any(a => a.Name == ".mainauth"))
+        {
+            return [];
+        }
 
         return cookies.Select(c => new Cookie
         {
             Name = c.Name,
-            Value = c.Value,
-            Domain = c.Domain,
-            HttpOnly = false,
-            Secure = true
+            Value = c.Value
         }).ToList();
     }
-    public async Task<string> GetResponseStringAsync(GetGridRequest request) => await _getGridEngine.GetResponseStringAsync(request);
+    public async Task<string> GetResponseStringAsync(NetworkCredential? credentials = null)
+    {
+        var getGrid = new GetGridRequest();
+        if (credentials != null)
+        {
+            var cookies = await GetLoginCookies(credentials).ConfigureAwait(false);
+            getGrid.Cookies.AddRange(cookies);
+        }
+        return await _getGridEngine.GetResponseStringAsync(getGrid);
+    }    
 }
