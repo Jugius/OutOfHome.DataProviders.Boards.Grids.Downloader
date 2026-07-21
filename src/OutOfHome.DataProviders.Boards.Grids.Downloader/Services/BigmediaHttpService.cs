@@ -1,20 +1,51 @@
 ﻿using OutOfHome.DataProviders.Boards.Grids.Downloader.Entities.Bigmedia;
 using OutOfHome.DataProviders.Boards.Grids.Downloader.Entities.Bigmedia.Common;
+using OutOfHome.DataProviders.Boards.Grids.Downloader.Exceptions;
+using System.Net;
 
 namespace OutOfHome.DataProviders.Boards.Grids.Downloader.Services;
 public class BigmediaHttpService
 {
+
     private readonly HttpClient _httpClient;
     private readonly HttpEngine<GetGridRequest, List<Board>, GetGridResponseContentConverter> _getGridEngine;
-    private readonly HttpEngine<AuthenticateRequest, bool, AuthenticateResponseContentConverter> _authenticateEngine;
+    private readonly HttpEngine<AuthenticateRequest, Cookie, AuthenticateResponseContentConverter> _authenticateEngine;
 
     public BigmediaHttpService(HttpClient httpClient)
     {
         _httpClient = httpClient;
         _getGridEngine = new HttpEngine<GetGridRequest, List<Board>, GetGridResponseContentConverter>(_httpClient);
-        _authenticateEngine = new HttpEngine<AuthenticateRequest, bool, AuthenticateResponseContentConverter>(_httpClient);
+        _authenticateEngine = new HttpEngine<AuthenticateRequest, Cookie, AuthenticateResponseContentConverter>(_httpClient);
     }
-    public async Task<List<Board>> GetGrid(GetGridRequest request) => await _getGridEngine.QueryAsync(request);
-    public async Task<string> GetResponseStringAsync(GetGridRequest request) => await _getGridEngine.GetResponseStringAsync(request);
-    public async Task<bool> Authenticate(AuthenticateRequest request) => await _authenticateEngine.QueryAsync(request);
+    public async Task<List<Board>> GetGrid(GetGridRequest request)
+    {
+        if (request.Credential is null)
+            throw DownloaderException.InvalidRequest("Request must contain auth credential");
+
+        var cookie = await GetLoginCookie(request.Credential);
+        request.Cookies.Add(cookie);
+
+        return await _getGridEngine.QueryAsync(request);
+    }
+    public async Task<string> GetResponseStringAsync(GetGridRequest request)
+    {
+        if (request.Credential is not null)
+        {
+            var cookie = await GetLoginCookie(request.Credential);
+            request.Cookies.Add(cookie);
+        }
+
+        return await _getGridEngine.GetResponseStringAsync(request);
+    }
+    public async Task<Cookie> GetLoginCookie(NetworkCredential credentials)
+    {
+        ArgumentNullException.ThrowIfNull(credentials);
+        var request = new AuthenticateRequest
+        {
+            UserName = credentials.UserName,
+            Password = credentials.Password,
+        };
+
+        return await _authenticateEngine.QueryAsync(request);
+    }    
 }

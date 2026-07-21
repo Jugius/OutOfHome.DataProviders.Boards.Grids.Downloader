@@ -2,7 +2,7 @@
 using OutOfHome.DataProviders.Boards.Grids.Downloader.Exceptions;
 
 namespace OutOfHome.DataProviders.Boards.Grids.Downloader.Entities.Bigmedia;
-public class AuthenticateRequest : IRequestPost
+internal class AuthenticateRequest : IRequestPost
 {
     private const string baseUri = "https://www.bma.ua/api/v1/auth/local/login";
     public string UserName { get; set; } = null!;
