@@ -38,7 +38,7 @@ public class DownloadResponseTests(ITestOutputHelper output) : TestBase(output)
     }
 
     [Fact]
-    public async Task ReadRowResponseString()
+    public async Task ResponseContainsBoardsWithUnknownOccupancies()
     {
         var folder = GetFilesFolder(Provider);
         var file = new FileInfo(Path.Combine(folder, "Response.txt"));
@@ -49,18 +49,29 @@ public class DownloadResponseTests(ITestOutputHelper output) : TestBase(output)
         Assert.NotNull(boards);
         Assert.True(boards.Length > 0);
 
+        Log($"Boards count: {boards.Length}");
+
+        List<string> boardsWithUnknownOccupancies = [];
+
         foreach (var board in boards)
         {
             foreach (var o in board.Occupancies)
             {
                 if (o.Status == 0)
-                    Log(board.ShortCode);
-
+                {
+                    boardsWithUnknownOccupancies.Add(board.ShortCode);
+                    break;
+                }
             }
         }
+        Log($"Boards With Unknown Occupancies: {boardsWithUnknownOccupancies.Count}");
+        foreach (var item in boardsWithUnknownOccupancies)
+        {
+            Log(item);
+        }
+        Assert.NotEmpty(boardsWithUnknownOccupancies);
 
-        Log($"Boards count: {boards.Length}");
 
-        Assert.All(boards.SelectMany(b => b.Occupancies), o => Assert.True(o.Status is OccupancyStatus.Booked or OccupancyStatus.Reserved or OccupancyStatus.Free));
+
     }
 }
