@@ -1,47 +1,55 @@
-﻿using PuppeteerSharp;
+﻿using OutOfHome.DataProviders.Boards.Grids.Downloader.Entities.AdvVg;
+using OutOfHome.DataProviders.Boards.Grids.Downloader.Entities.AdvVg.Common;
+using OutOfHome.DataProviders.Boards.Grids.Downloader.Exceptions;
+using PuppeteerSharp;
 using System.Net;
 
 namespace OutOfHome.DataProviders.Boards.Grids.Downloader.Services;
-internal class AdvVgHttpService<TRequest> where TRequest : Entities.AdvVg.GetGridRequest, new()
+public sealed class AdvVgHttpService(HttpClient httpClient, IChromiumInitializer chromiumInitializer)
 {
     private const string SessionIdCookieName = "PHPSESSID";
 
-    private HttpEngine<TRequest, Entities.AdvVg.Common.ResponseContent, Entities.AdvVg.ContentParser> _getAdvVgGridEngine;
+    private readonly HttpEngine<GetGridRequest, ResponseContent, ContentParser> _getAdvVgGridEngine =
+        new HttpEngine<GetGridRequest, ResponseContent, ContentParser>(httpClient);
     
-    public static async Task<Cookie> GetInitializedSessionCookie(string uri)
+    public async Task<Cookie> GetInitializedSessionCookie(string uri)
     {
-        var browserFetcher = new BrowserFetcher();
-        await browserFetcher.DownloadAsync();
-        await using var browser = await Puppeteer.LaunchAsync(
-            new LaunchOptions { Headless = true });
-        await using var page = await browser.NewPageAsync();
-        await page.GoToAsync(uri);
+        await using var pageContext = await chromiumInitializer.CreatePageAsync();
+        var page = pageContext.Page;
         
+        // Отключаем загрузку тяжелых ресурсов (картинки, шрифты, стили)
+        await page.SetRequestInterceptionAsync(true);
+        page.Request += (sender, e) =>
+        {
+            var type = e.Request.ResourceType;
+            if (type is ResourceType.Image or ResourceType.Font or ResourceType.StyleSheet or ResourceType.Media)
+            {
+                _ = e.Request.AbortAsync();
+            }
+            else
+            {
+                _ = e.Request.ContinueAsync();
+            }
+        };
+
+        await page.GoToAsync(uri);
+
         var cookies = await page.GetCookiesAsync();
         var sesIdCookie = cookies.FirstOrDefault(a => a.Name.Equals(SessionIdCookieName, StringComparison.OrdinalIgnoreCase));
 
-        return new Cookie
+        return sesIdCookie is null
+            ? throw DownloaderException.ServerError($"Not found session cookie on page {uri}")
+            : new Cookie
         {
             Name = sesIdCookie.Name,
             Value = sesIdCookie.Value,
-            Domain = sesIdCookie.Domain,
-            Path = sesIdCookie.Path,
-            HttpOnly = false,
-            Secure = true
         };
     }
-    internal static async Task<HttpEngine<TRequest, Entities.AdvVg.Common.ResponseContent, Entities.AdvVg.ContentParser>> CreateHttpEngine(string uri)
+    public async Task<ResponseContent> GetGrid(Supplier supplier)
     {
-        var cookie = await GetInitializedSessionCookie(uri);
-        var handler = HttpClientFactory.GetDefaultHttpClientHandler();
-        handler.CookieContainer.Add(cookie);
-        var client = HttpClientFactory.CreateDefaultHttpClient(handler);
-        return new HttpEngine<TRequest, Entities.AdvVg.Common.ResponseContent, Entities.AdvVg.ContentParser>(client);
-    }
-    public async Task<Entities.AdvVg.Common.ResponseContent> GetGrid()
-    {
-        TRequest request = new TRequest();
-        _getAdvVgGridEngine ??= await CreateHttpEngine(request.BaseUri);
+        var request = new GetGridRequest(supplier);
+        var cookie = await GetInitializedSessionCookie(request.BaseUri);
+        request.Cookies.Add(cookie);
         return await this._getAdvVgGridEngine.QueryAsync(request);
     }
 }

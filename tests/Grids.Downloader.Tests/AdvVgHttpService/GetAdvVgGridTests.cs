@@ -1,15 +1,22 @@
 ﻿using OutOfHome.DataProviders.Boards.Grids.Downloader.Services;
+using OutOfHome.DataProviders.Boards.Grids.Downloader.Tests.Extensions;
 
 namespace OutOfHome.DataProviders.Boards.Grids.Downloader.Tests.AdvVgHttpService;
 
-public class GetAdvVgGridTests(ITestOutputHelper output) : TestBase(output)
+public class GetAdvVgGridTests: TestBase
 {
+    private readonly Services.AdvVgHttpService service;
+    public GetAdvVgGridTests(ITestOutputHelper output) : base(output)
+    {
+        var chromium = Configuration.GetChromiumFolder();
+        var chromiumInitializer = new ChromiumInitializer(chromium);
+        this.service = new Services.AdvVgHttpService(HttpClientFactory.Create(), chromiumInitializer);
+    }
     [Fact]
     public async Task PerekhidAdvVg()
     {
         const string provider = "PerekhidAdvVg";
-        var service = new PerekhidHttpService();
-        var grid = await service.GetGrid();
+        var grid = await service.GetGrid(Entities.AdvVg.Common.Supplier.Perekhid);
 
         Assert.NotNull(grid);
         Assert.NotEmpty(grid.FileName);
@@ -24,8 +31,7 @@ public class GetAdvVgGridTests(ITestOutputHelper output) : TestBase(output)
     public async Task SVOutdoorAdvVg()
     {
         const string provider = "SVOutdoorAdvVg";
-        var service = new SVOutdoorHttpService();
-        var grid = await service.GetGrid();
+        var grid = await service.GetGrid(Entities.AdvVg.Common.Supplier.SVOutdoor);
 
         Assert.NotNull(grid);
         Assert.NotEmpty(grid.FileName);
