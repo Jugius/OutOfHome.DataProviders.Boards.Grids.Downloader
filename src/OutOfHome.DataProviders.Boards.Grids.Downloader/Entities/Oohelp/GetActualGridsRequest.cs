@@ -1,7 +1,9 @@
 ﻿using OutOfHome.DataProviders.Boards.Grids.Downloader.Entities.Interfaces;
+using System.Net;
+using System.Text.Json.Serialization;
 
 namespace OutOfHome.DataProviders.Boards.Grids.Downloader.Entities.Oohelp;
-public class GetActualGridsRequest : IRequest
+public class GetActualGridsRequest : IRequest, IBearerTokenRequest
 {
     private const string baseUri = "https://boards.oohelp.net/api/grids";
     public DateOnly? GridsDownoadedDate { get; set; }
@@ -15,6 +17,12 @@ public class GetActualGridsRequest : IRequest
 
         return new Uri($"{baseUri}?{string.Join('&', parameters)}");        
     }
+
+    [JsonIgnore]
+    public NetworkCredential? Credential { get; set; }
+
+    [JsonIgnore]
+    public string? Token { get; set; }
     protected List<string> GetQueryParameters()
     {
         List<string> parameters = new List<string>(2);

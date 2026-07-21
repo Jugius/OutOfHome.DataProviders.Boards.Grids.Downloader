@@ -23,5 +23,4 @@ public class AuthenticateTests(ITestOutputHelper output) : TestBase(output)
         using var stream = file.Create();
         await System.Text.Json.JsonSerializer.SerializeAsync(stream, cookie, cancellationToken: TestContext.Current.CancellationToken);
     }
-
 }

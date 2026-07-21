@@ -1,5 +1,6 @@
 ﻿using OutOfHome.DataProviders.Boards.Grids.Downloader.Entities.Interfaces;
 using OutOfHome.DataProviders.Boards.Grids.Downloader.Exceptions;
+using System.Net.Http.Headers;
 
 namespace OutOfHome.DataProviders.Boards.Grids.Downloader.Services;
 
@@ -62,6 +63,11 @@ internal sealed class HttpEngine<TRequest, TResult, TParser>
         {
             var cookieHeaderValue = string.Join("; ", cookieRequest.Cookies.Select(c => $"{c.Name}={c.Value}"));
             message.Headers.Add("Cookie", cookieHeaderValue);
+        }
+
+        if (request is IBearerTokenRequest tokenRequest && !string.IsNullOrWhiteSpace(tokenRequest.Token))
+        {
+            message.Headers.Authorization = new AuthenticationHeaderValue("Bearer", tokenRequest.Token);
         }
 
         return message;

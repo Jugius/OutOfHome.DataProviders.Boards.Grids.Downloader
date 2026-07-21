@@ -1,12 +1,13 @@
 ﻿using OutOfHome.DataProviders.Boards.Grids.Downloader.Entities.Interfaces;
 using OutOfHome.DataProviders.Boards.Grids.Downloader.Entities.Oohelp.Common.Enums;
 using OutOfHome.DataProviders.Boards.Grids.Downloader.JsonConverters;
+using System.Net;
 using System.Text;
 using System.Text.Json.Serialization;
 
 
 namespace OutOfHome.DataProviders.Boards.Grids.Downloader.Entities.Oohelp;
-public class GetGridRequest : IRequestPost
+public class GetGridRequest : IRequestPost, IBearerTokenRequest
 {
     private const string baseUri = "https://boards.oohelp.net/api/grids";
 
@@ -40,7 +41,13 @@ public class GetGridRequest : IRequestPost
 
 
     [JsonIgnore]
-    public string Key { get; set; }
+    public string? Key { get; set; }
+
+    [JsonIgnore]
+    public NetworkCredential? Credential { get; set; }
+
+    [JsonIgnore]
+    public string? Token {  get; set; }
 
     public HttpContent GetContent()
     {
