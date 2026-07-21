@@ -55,11 +55,17 @@ internal sealed class HttpEngine<TRequest, TResult, TParser>
     private static HttpRequestMessage BuildRequestMessage(TRequest request)
     {
         var uri = request.GetUri();
-        if (request is IRequestPost post)
+        var message = request is IRequestPost post
+            ? new HttpRequestMessage(HttpMethod.Post, uri) { Content = post.GetContent() }
+            : new HttpRequestMessage(HttpMethod.Get, uri);
+
+        if (request is ICookieContainerRequest cookieRequest && cookieRequest.Cookies.Count > 0)
         {
-            return new HttpRequestMessage(HttpMethod.Post, uri) { Content = post.GetContent() };
+            var cookieHeaderValue = string.Join("; ", cookieRequest.Cookies.Select(c => $"{c.Name}={c.Value}"));
+            message.Headers.Add("Cookie", cookieHeaderValue);
         }
-        return new HttpRequestMessage(HttpMethod.Get, uri);
+
+        return message;
     }
     private static async Task ThrowIfNotSuccessStatusCode(HttpResponseMessage response)
     {
