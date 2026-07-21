@@ -14,7 +14,6 @@ public class SpyOutdoorHttpService
         _getGridEngine = new HttpEngine<GetGridRequest, ResponseContent, BaseResponseContentParser>(_httpClient);
         _getBoardsEngine = new HttpEngine<GetBoardsRequest, BoardsTable, GeetBoardsResponseParser>(_httpClient);
     }
-    public SpyOutdoorHttpService() : this(HttpClientFactory.CreateDefaultHttpClient()) { }
     public async Task<ResponseContent> GetGrid(GetGridRequest request) => await this._getGridEngine.QueryAsync(request);
     public async Task<BoardsTable> GetBoards(GetBoardsRequest request) => await _getBoardsEngine.QueryAsync(request);
     public async Task<string> ReadResponseAsString(GetGridRequest request) => await _getGridEngine.GetResponseStringAsync(request);

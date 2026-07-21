@@ -11,9 +11,6 @@ public class OctagonHttpService
         _httpClient = httpClient;
         _getGridEngine = new HttpEngine<GetGridRequest, OctagonBoard[], ContentParser>(_httpClient);
     }
-    public OctagonHttpService() : this(HttpClientFactory.CreateDefaultHttpClient())
-    {
-    }
     public async Task<OctagonBoard[]> GetGrid() => await _getGridEngine.QueryAsync(new GetGridRequest());
     public async Task<string> GetResponseStringAsync() => await _getGridEngine.GetResponseStringAsync(new GetGridRequest());
 }

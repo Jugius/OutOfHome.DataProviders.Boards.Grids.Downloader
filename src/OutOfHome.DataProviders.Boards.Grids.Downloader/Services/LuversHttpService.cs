@@ -13,9 +13,6 @@ public class LuversHttpService
         _getSidesEngine = new HttpEngine<GetSidesRequest, string[], ContentParser>(_httpClient);
         _getSpecEngine = new HttpEngine<GetSpecRequest, string[], ContentParser>(_httpClient);
     }
-    public LuversHttpService() : this(HttpClientFactory.CreateDefaultHttpClient())
-    {
-    }
 
     public async Task<string[]> GetSides() => await this._getSidesEngine.QueryAsync(new GetSidesRequest());
     public async Task<string[]> GetSpec() => await this._getSpecEngine.QueryAsync(new GetSpecRequest());

@@ -7,13 +7,14 @@ namespace OutOfHome.DataProviders.Boards.Grids.Downloader.Tests.Octagon;
 public class DownloadResponseTests(ITestOutputHelper output) : TestBase(output)
 {
     const string Provider = "Octagon";
+    private readonly OctagonHttpService service = new(HttpClientFactory.Create());
 
     [Fact]
     public async Task DownloadResponse()
     {
         var folder = GetFilesFolder(Provider);
         var file = new FileInfo(Path.Combine(folder, "Response.json"));
-        var service = new OctagonHttpService();
+
 
         var boards = await service.GetGrid();
 
@@ -29,7 +30,6 @@ public class DownloadResponseTests(ITestOutputHelper output) : TestBase(output)
     {
         var folder = GetFilesFolder(Provider);
         var file = Path.Combine(folder, "Response.txt");
-        var service = new OctagonHttpService();
 
         var row = await service.GetResponseStringAsync();
         Assert.False(string.IsNullOrEmpty(row));

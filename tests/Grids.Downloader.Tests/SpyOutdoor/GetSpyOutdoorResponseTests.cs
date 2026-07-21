@@ -6,7 +6,7 @@ namespace OutOfHome.DataProviders.Boards.Grids.Downloader.Tests.SpyOutdoor;
 public class GetSpyOutdoorResponseTests(ITestOutputHelper output) : TestBase(output)
 {
     private const string provider = "SpyOutdoor";
-    private readonly Services.SpyOutdoorHttpService spyOutdoorService = new();
+    private readonly Services.SpyOutdoorHttpService spyOutdoorService = new(HttpClientFactory.Create());
     
     [Theory]
     [InlineData(Supplier.Igrok)]

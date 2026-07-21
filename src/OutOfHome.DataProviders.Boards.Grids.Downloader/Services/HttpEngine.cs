@@ -14,7 +14,6 @@ internal sealed class HttpEngine<TRequest, TResult, TParser>
     {
         this.httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
     }
-    public HttpEngine() : this(HttpClientFactory.CreateDefaultHttpClient()) { }
 
     public async Task<TResult> QueryAsync(TRequest request, CancellationToken cancellationToken = default)
     {

@@ -2,7 +2,7 @@
 
 public class DownloadFileTests(ITestOutputHelper output) : TestBase(output)
 {
-    private readonly Services.DownloadFileHttpService downloadFileService = new();
+    private readonly Services.DownloadFileHttpService downloadFileService = new(HttpClientFactory.Create());
 
     [Fact]
     public async Task Megaboard()

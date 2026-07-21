@@ -16,10 +16,6 @@ public class OohelpHttpService
         _getActualGridsEngine = new HttpEngine<GetActualGridsRequest, List<GridInfo>, GetActualGridsResponseContentConverter>(_httpClient);
         _authenticateEngine = new HttpEngine<AuthenticateRequest, string, AuthenticateResponseContentConverter>(_httpClient);
     }
-    public OohelpHttpService() : this(HttpClientFactory.CreateDefaultHttpClient())
-    {
-    }
-
     public async Task<ResponseContent> GetGrid(GetGridRequest request) => await _getGridEngine.QueryAsync(request);
     public async Task<List<GridInfo>> GetActualGrids(GetActualGridsRequest request) => await _getActualGridsEngine.QueryAsync(request);
     public async Task<string> Authenticate(AuthenticateRequest request)
