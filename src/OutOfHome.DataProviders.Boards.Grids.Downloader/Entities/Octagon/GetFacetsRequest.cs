@@ -1,0 +1,11 @@
+﻿using System.Net.Http.Json;
+
+
+namespace OutOfHome.DataProviders.Boards.Grids.Downloader.Entities.Octagon;
+
+internal sealed record GetFacetsRequest : Interfaces.IRequestPost
+{
+    private const string baseUri = "https://sales.octagon.com.ua/api/v1/public/faces/search/facets";
+    public Uri GetUri() => new Uri(baseUri);
+    public HttpContent GetContent() => JsonContent.Create(new { });
+}
