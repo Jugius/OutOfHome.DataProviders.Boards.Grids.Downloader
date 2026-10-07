@@ -1,13 +1,12 @@
 ﻿using OutOfHome.DataProviders.Boards.Grids.Downloader.Entities.Interfaces;
 using OutOfHome.DataProviders.Boards.Grids.Downloader.Entities.Oohelp.Common.Enums;
 using OutOfHome.DataProviders.Boards.Grids.Downloader.JsonConverters;
-using System.Net;
 using System.Text;
 using System.Text.Json.Serialization;
 
 
 namespace OutOfHome.DataProviders.Boards.Grids.Downloader.Entities.Oohelp;
-public class GetGridRequest : IRequestPost, IBearerTokenRequest
+public class GetGridRequest : IRequestPost
 {
     private const string baseUri = "https://boards.oohelp.net/api/grids";
 
@@ -38,29 +37,12 @@ public class GetGridRequest : IRequestPost, IBearerTokenRequest
 
     [JsonPropertyName("remove_zero_price")]
     public bool RemoveZeroPriceRecords { get; set; }
-
-
-    [JsonIgnore]
-    public string? Key { get; set; }
-
-    [JsonIgnore]
-    public NetworkCredential? Credential { get; set; }
-
-    [JsonIgnore]
-    public string? Token {  get; set; }
-
     public HttpContent GetContent()
     {
         string json = System.Text.Json.JsonSerializer.Serialize(this);
         return new StringContent(json, Encoding.UTF8, "application/json");
     }
 
-    public Uri GetUri()
-    {
-        if(string.IsNullOrEmpty(this.Key))
-            return new Uri(baseUri);
+    public Uri GetUri() => new Uri(baseUri);
 
-        return new Uri(baseUri + $"?key={this.Key}");
-    }
-        
 }
